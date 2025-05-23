@@ -51,7 +51,7 @@ export default function Navbar() {
               Jobs
             </a>
             <a
-              href="/findtalens"
+              href="/findtalents"
               className="text-gray-700 hover:text-cyan-500 px-3 py-2 rounded-md text-sm font-medium transition duration-300"
             >
               Tutors
@@ -80,7 +80,7 @@ export default function Navbar() {
             </a>
             <a
               href="/post-job"
-              className="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-full text-sm font-medium flex items-center transition duration-300"
+              className="bg-sky-400 hover:bg-sky-500 text-white px-4 py-2 rounded-full text-sm font-medium flex items-center transition duration-300"
             >
               <span className="mr-1">
                 <IoIosRocket />

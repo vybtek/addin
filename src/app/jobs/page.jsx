@@ -202,7 +202,9 @@ const JobsPage = () => {
           ) : (
             <div className="text-center text-gray-600 py-8">
               <p className="text-lg font-medium">No jobs found</p>
-              <p className="text-sm">Try adjusting your filters or search term.</p>
+              <p className="text-sm">
+                Try adjusting your filters or search term.
+              </p>
             </div>
           )}
         </div>

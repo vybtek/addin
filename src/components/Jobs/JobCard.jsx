@@ -1,8 +1,11 @@
+"use client";
 import { Clock, DollarSign, Heart, MapPin, Share2 } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation"; // Import useRouter from next/navigation
 
 const JobCard = ({ job }) => {
   const [isClient, setIsClient] = useState(false);
+  const router = useRouter(); // Initialize useRouter hook
 
   useEffect(() => {
     setIsClient(true);
@@ -11,13 +14,11 @@ const JobCard = ({ job }) => {
   // Function to format date consistently
   const formatDate = (dateString) => {
     if (!isClient) {
-      // Return a placeholder or empty string during SSR
       return "";
     }
 
     try {
       const date = new Date(dateString);
-      // Use a consistent format that won't vary by locale
       return date.toLocaleDateString("en-US", {
         year: "numeric",
         month: "2-digit",
@@ -31,6 +32,11 @@ const JobCard = ({ job }) => {
     }
   };
 
+  // Handle "Apply Now" button click
+  const handleApplyNow = () => {
+    router.push(`/jobs/${job.id}`); // Navigate to the job details page
+  };
+
   return (
     <div className="bg-white rounded-lg hover:scale-101 shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
       <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
@@ -42,7 +48,7 @@ const JobCard = ({ job }) => {
             <span className="flex items-center gap-1">
               <span className="font-medium">Fixed:</span>
               <span className="font-semibold text-gray-900">
-                Expert (₹ ₹ ₹)
+                {job.experienceLevel} (₹ ₹ ₹)
               </span>
             </span>
             <span className="flex items-center gap-1">
@@ -59,7 +65,7 @@ const JobCard = ({ job }) => {
             {job.subjects.map((subject, index) => (
               <span
                 key={index}
-                className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm"
+                className="px-3 py-1 bg-sky-200 text-gray-700 rounded-full text-sm"
               >
                 {subject}
               </span>
@@ -96,16 +102,16 @@ const JobCard = ({ job }) => {
           </div>
         </div>
         <div className="flex lg:flex-col gap-2 lg:items-end">
-          <button className="bg-sky-400 text-white px-6 py-2 rounded-lg hover:bg-sky-500 transition-colors font-medium">
+          <button
+            onClick={handleApplyNow} // Add onClick handler
+            className="bg-sky-400 text-white px-6 py-2 cursor-pointer rounded-lg hover:bg-sky-500 transition-colors font-medium"
+          >
             Apply Now
           </button>
           <div className="flex gap-2">
-            <button className="p-2 text-gray-500 hover:text-red-500 transition-colors">
+            <button className="p-2 text-gray-500 cursor-pointer hover:text-red-500 transition-colors">
               <Heart className="w-5 h-5" />
             </button>
-            {/* <button className="p-2 text-gray-500 hover:text-blue-500 transition-colors">
-              <Share2 className="w-5 h-5" />
-            </button> */}
           </div>
         </div>
       </div>

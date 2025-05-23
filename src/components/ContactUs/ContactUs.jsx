@@ -78,7 +78,7 @@ const ContactUs = () => {
                 Upload Files
               </button>
             </div>
-            <button className="relative w-full px-4 py-2 text-white font-semibold rounded-lg bg-gradient-to-l from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 overflow-hidden group">
+            <button className="relative w-full px-4 py-2 text-white font-semibold rounded-lg bg-sky-400 hover:bg-sky-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 overflow-hidden group">
               <span className="relative z-10">Submit</span>
               <span className="absolute inset-0 bg-white opacity-20 scale-0 group-active:scale-100 group-active:opacity-0 transition-transform duration-200 rounded-full origin-center"></span>
             </button>
