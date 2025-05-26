@@ -56,6 +56,12 @@ export default function Navbar() {
             >
               Tutors
             </a>
+            <a
+              href="/dashboard"
+              className="text-gray-700 hover:text-cyan-500 px-3 py-2 rounded-md text-sm font-medium transition duration-300"
+            >
+              Dashboard
+            </a>
           </div>
 
           {/* Auth Buttons */}
@@ -79,12 +85,12 @@ export default function Navbar() {
               Register
             </a>
             <a
-              href="/post-job"
+              href="/sign-up"
               className="bg-sky-400 hover:bg-sky-500 text-white px-4 py-2 rounded-full text-sm font-medium flex items-center transition duration-300"
             >
               <span className="mr-1">
                 <IoIosRocket />
-              </span>{" "}
+              </span>
               Post A Job
             </a>
           </div>
