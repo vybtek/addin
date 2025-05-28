@@ -8,49 +8,91 @@ export default function PopularJobs() {
     {
       id: 1,
       title: "Academic Tutor",
-      image: <img src="https://www.addinsedu.com/user_uploads/category_icons/4d2ddd102d5a770699e86bdeaecb0161.png" alt="Academic Tutor" className="w-12 h-12 object-cover rounded-full" />,
+      image: (
+        <img
+          src="https://www.addinsedu.com/user_uploads/category_icons/4d2ddd102d5a770699e86bdeaecb0161.png"
+          alt="Academic Tutor"
+          className="w-12 h-12 object-cover rounded-full"
+        />
+      ),
       description:
         "Are you struggling to keep up with your coursework or do you want to take your academic performance to the next level?",
     },
     {
       id: 2,
       title: "Dance Trainer",
-      image: <img src="https://www.addinsedu.com/user_uploads/category_icons/c478911a02ff653bbb7e3d950803ea79.png" alt="Dance Trainer" className="w-12 h-12 object-cover rounded-full" />,
+      image: (
+        <img
+          src="https://www.addinsedu.com/user_uploads/category_icons/c478911a02ff653bbb7e3d950803ea79.png"
+          alt="Dance Trainer"
+          className="w-12 h-12 object-cover rounded-full"
+        />
+      ),
       description:
         "Are you looking for a talented dance instructor to help you better your moves and technique? There are many skilled trainers available.",
     },
     {
       id: 3,
       title: "Music Trainer",
-      image: <img src="https://www.addinsedu.com/user_uploads/category_icons/3f805b48f99a2c541fc496fb0f582c65.png" alt="Music Trainer" className="w-12 h-12 object-cover rounded-full" />,
+      image: (
+        <img
+          src="https://www.addinsedu.com/user_uploads/category_icons/3f805b48f99a2c541fc496fb0f582c65.png"
+          alt="Music Trainer"
+          className="w-12 h-12 object-cover rounded-full"
+        />
+      ),
       description:
         "Experienced music instructor teaching general music styles, classical piano, practical and theoretical knowledge.",
     },
     {
       id: 4,
       title: "Yoga Trainer",
-      image: <img src="https://www.addinsedu.com/user_uploads/category_icons/fb3f9c76dc2613dcd6f9b9f7f233d72e.png" alt="Yoga Trainer" className="w-12 h-12 object-cover rounded-full" />,
+      image: (
+        <img
+          src="https://www.addinsedu.com/user_uploads/category_icons/fb3f9c76dc2613dcd6f9b9f7f233d72e.png"
+          alt="Yoga Trainer"
+          className="w-12 h-12 object-cover rounded-full"
+        />
+      ),
       description:
         '"Experienced and certified yoga teacher with knowledge of yoga\'s history, philosophy, and ethics." Trained in multiple styles and approaches.',
     },
     {
       id: 5,
       title: "Drawing & Painting",
-      image: <img src="https://www.addinsedu.com/user_uploads/category_icons/e7c03548c97492c9286408a16afc0d8c.png" alt="Drawing & Painting" className="w-12 h-12 object-cover rounded-full" />,
+      image: (
+        <img
+          src="https://www.addinsedu.com/user_uploads/category_icons/e7c03548c97492c9286408a16afc0d8c.png"
+          alt="Drawing & Painting"
+          className="w-12 h-12 object-cover rounded-full"
+        />
+      ),
       description:
         "Art instructor with experience and certification in a variety of drawing and painting methods. The art classes are for all skill levels.",
     },
     {
       id: 6,
       title: "Writing & Languages",
-      image: <img src="https://www.addinsedu.com/user_uploads/category_icons/de42823febd439833dbf0669fba8f0c5.png" alt="Writing & Languages" className="w-12 h-12 object-cover rounded-full" />,
+      image: (
+        <img
+          src="https://www.addinsedu.com/user_uploads/category_icons/de42823febd439833dbf0669fba8f0c5.png"
+          alt="Writing & Languages"
+          className="w-12 h-12 object-cover rounded-full"
+        />
+      ),
       description:
         "Writing and language instructor with experience and certification in a variety of writing methods and techniques.",
     },
     {
       id: 7,
       title: "Personal Gym trainer",
-      image: <img src="https://www.addinsedu.com/user_uploads/category_icons/92c2960edc6219f8dc0023bbd28af22b.png" alt="Personal Gym Trainer" className="w-12 h-12 object-cover rounded-full" />,
+      image: (
+        <img
+          src="https://www.addinsedu.com/user_uploads/category_icons/92c2960edc6219f8dc0023bbd28af22b.png"
+          alt="Personal Gym Trainer"
+          className="w-12 h-12 object-cover rounded-full"
+        />
+      ),
       description:
         "Personal gym trainer with experience and certification in a variety of training routines. The trainer will help achieve your fitness goals.",
     },

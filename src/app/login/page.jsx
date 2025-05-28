@@ -9,7 +9,7 @@ const LoginPage = () => {
 
   const handleLogin = () => {
     console.log("Logging in with:", email, password);
-    // Add login logic here
+    // login logic here
   };
 
   return (

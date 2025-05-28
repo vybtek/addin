@@ -65,10 +65,9 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-black text-white w-full p-2">
-      <div className="container mx-auto px-4 py-8">
-        {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <footer className="bg-black text-white w-full">
+      <div className="container mx-auto px-6 py-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {categories.map((category, index) => (
             <div
               key={index}
@@ -77,8 +76,8 @@ export default function Footer() {
               onMouseLeave={() => setHoveredCategory(null)}
             >
               <h2
-                className={`text-xl font-bold mb-4 ${
-                  hoveredCategory === index ? "text-cyan-400" : ""
+                className={`text-lg font-semibold ${
+                  hoveredCategory === index ? "text-cyan-400" : "text-gray-200"
                 } transition-colors duration-300`}
               >
                 {category.title}
@@ -88,7 +87,7 @@ export default function Footer() {
                   <li key={linkIndex}>
                     <a
                       href={link.href}
-                      className="hover:text-cyan-400 transition-colors duration-300 block py-1"
+                      className="text-gray-400 hover:text-cyan-400 transition-colors duration-300 block text-sm"
                     >
                       {link.name}
                     </a>
@@ -98,25 +97,22 @@ export default function Footer() {
             </div>
           ))}
         </div>
-
-        {/* Bottom Footer */}
-        <div className="mt-12 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
-          {/* Social Media Icons */}
-          <div className="flex space-x-4 mb-6 md:mb-0">
+        <div className="mt-12 pt-8 border-t border-gray-700 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <div className="flex space-x-6">
             {socialMedia.map((platform, index) => (
               <a
                 key={index}
                 href={platform.href}
-                className="bg-gray-800 hover:bg-cyan-700 transition-colors duration-300 p-3 rounded-full flex items-center justify-center"
+                className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"
                 aria-label={platform.name}
               >
                 {platform.icon}
               </a>
             ))}
           </div>
-
-          {/* Copyright Text */}
-          <div className="text-gray-400">© 2025 Add-Ins Tutor Inc.</div>
+          <div className="text-gray-400 text-sm">
+            © {new Date().getFullYear()} Add-Ins Tutor Inc.
+          </div>
         </div>
       </div>
     </footer>

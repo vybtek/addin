@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import SearchableCitySelect from "../../components/Register/SearchableCitySelect";
 import { CiMail, CiUser } from "react-icons/ci";
@@ -57,9 +57,9 @@ const RegisterPage = () => {
           </label>
         </div>
 
-        <div className="mb-4"> 
+        <div className="mb-4">
           <div className="flex items-center border border-gray-300 rounded-full px-4 py-2 bg-white">
-            <CiUser className="w-5 h-5 text-gray-600 mr-2"/>
+            <CiUser className="w-5 h-5 text-gray-600 mr-2" />
             <input
               type="text"
               placeholder="Enter Name"
@@ -72,7 +72,7 @@ const RegisterPage = () => {
 
         <div className="mb-4">
           <div className="flex items-center border border-gray-300 rounded-full px-4 py-2 bg-white">
-           <CiMail className="w-5 h-5 text-gray-600 mr-2"/>
+            <CiMail className="w-5 h-5 text-gray-600 mr-2" />
             <input
               type="email"
               placeholder="Email Address"
@@ -85,7 +85,7 @@ const RegisterPage = () => {
 
         <div className="mb-4">
           <div className="flex items-center border border-gray-300 rounded-full px-4 py-2 bg-white">
-           <MdOutlineLocalPhone  className="w-5 h-5 text-gray-500 mr-2"/>
+            <MdOutlineLocalPhone className="w-5 h-5 text-gray-500 mr-2" />
             <input
               type="tel"
               placeholder="Phone"
@@ -101,7 +101,7 @@ const RegisterPage = () => {
 
         <div className="mb-4">
           <div className="flex items-center border border-gray-300 rounded-full px-4 py-2 bg-white">
-            <TbLockPassword className="w-5 h-5 text-gray-500 mr-2"/>
+            <TbLockPassword className="w-5 h-5 text-gray-500 mr-2" />
             <input
               type="password"
               placeholder="Enter Password"
