@@ -12,7 +12,7 @@ const ContactUs = () => {
     const files = event.target.files;
     if (files.length > 0) {
       console.log("Selected files:", files);
-      // Add your file upload logic here (e.g., send to server)
+      //file upload logic here
     }
   };
 

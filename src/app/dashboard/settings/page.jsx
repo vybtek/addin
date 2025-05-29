@@ -1,23 +1,23 @@
-"use client"
-import React, { useState } from 'react';
-import { Pencil } from 'lucide-react';
+"use client";
+import React, { useState } from "react";
+import { Pencil } from "lucide-react";
 
 const TutorSettingsPage = () => {
   const [isEditingAccount, setIsEditingAccount] = useState(false);
   const [isEditingLocation, setIsEditingLocation] = useState(false);
-  
+
   const [accountData, setAccountData] = useState({
-    name: 'Arpit',
-    email: 'arpit56005@gmail.com',
-    phone: '6367885453'
+    name: "Arpit",
+    email: "arpit56005@gmail.com",
+    phone: "6367885453",
   });
-  
+
   const [locationData, setLocationData] = useState({
-    address: '',
-    locality: '',
-    city: '',
-    state: '',
-    postalCode: ''
+    address: "",
+    locality: "",
+    city: "",
+    state: "",
+    postalCode: "",
   });
 
   const handleAccountUpdate = () => {
@@ -43,8 +43,10 @@ const TutorSettingsPage = () => {
   return (
     <div className="min-h-screen bg-gray-50  py-16 ">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-8">Contact Info</h1>
-        
+        <h1 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-8">
+          Contact Info
+        </h1>
+
         {/* Account Section */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
           <div className="p-6 border-b border-gray-200">
@@ -60,7 +62,7 @@ const TutorSettingsPage = () => {
               )}
             </div>
           </div>
-          
+
           <div className="p-6">
             <div className="flex flex-col md:flex-row md:items-start gap-6">
               {/* Profile Picture */}
@@ -76,28 +78,36 @@ const TutorSettingsPage = () => {
                   </button>
                 </div>
               </div>
-              
+
               {/* Account Details */}
               <div className="flex-1 space-y-4">
                 {!isEditingAccount ? (
                   <>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">User ID</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          User ID
+                        </label>
                         <p className="text-gray-900">arpit-6421gdiy</p>
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Email
+                        </label>
                         <p className="text-gray-900">a*******05@gmail.com</p>
                       </div>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Name
+                        </label>
                         <p className="text-gray-900">{accountData.name}</p>
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Phone
+                        </label>
                         <p className="text-gray-900">{accountData.phone}</p>
                       </div>
                     </div>
@@ -106,31 +116,52 @@ const TutorSettingsPage = () => {
                   <>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Name</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Name
+                        </label>
                         <input
                           type="text"
                           value={accountData.name}
-                          onChange={(e) => setAccountData({...accountData, name: e.target.value})}
+                          onChange={(e) =>
+                            setAccountData({
+                              ...accountData,
+                              name: e.target.value,
+                            })
+                          }
                           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Email
+                        </label>
                         <input
                           type="email"
                           value={accountData.email}
-                          onChange={(e) => setAccountData({...accountData, email: e.target.value})}
+                          onChange={(e) =>
+                            setAccountData({
+                              ...accountData,
+                              email: e.target.value,
+                            })
+                          }
                           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
                         />
                       </div>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Phone</label>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Phone
+                        </label>
                         <input
                           type="tel"
                           value={accountData.phone}
-                          onChange={(e) => setAccountData({...accountData, phone: e.target.value})}
+                          onChange={(e) =>
+                            setAccountData({
+                              ...accountData,
+                              phone: e.target.value,
+                            })
+                          }
                           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
                         />
                       </div>
@@ -171,37 +202,58 @@ const TutorSettingsPage = () => {
               )}
             </div>
           </div>
-          
+
           <div className="p-6">
             {isEditingLocation ? (
               <div className="space-y-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Address</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Address
+                  </label>
                   <input
                     type="text"
                     placeholder="Enter address (Your address will not show to client or others)"
                     value={locationData.address}
-                    onChange={(e) => setLocationData({...locationData, address: e.target.value})}
+                    onChange={(e) =>
+                      setLocationData({
+                        ...locationData,
+                        address: e.target.value,
+                      })
+                    }
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
                   />
                 </div>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Locality/Area name</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Locality/Area name
+                    </label>
                     <input
                       type="text"
                       placeholder="Enter locality"
                       value={locationData.locality}
-                      onChange={(e) => setLocationData({...locationData, locality: e.target.value})}
+                      onChange={(e) =>
+                        setLocationData({
+                          ...locationData,
+                          locality: e.target.value,
+                        })
+                      }
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">City</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      City
+                    </label>
                     <select
                       value={locationData.city}
-                      onChange={(e) => setLocationData({...locationData, city: e.target.value})}
+                      onChange={(e) =>
+                        setLocationData({
+                          ...locationData,
+                          city: e.target.value,
+                        })
+                      }
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors bg-white"
                     >
                       <option value="">Select City</option>
@@ -212,30 +264,44 @@ const TutorSettingsPage = () => {
                     </select>
                   </div>
                 </div>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">State</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      State
+                    </label>
                     <input
                       type="text"
                       placeholder="Enter state"
                       value={locationData.state}
-                      onChange={(e) => setLocationData({...locationData, state: e.target.value})}
+                      onChange={(e) =>
+                        setLocationData({
+                          ...locationData,
+                          state: e.target.value,
+                        })
+                      }
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Postal Code</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Postal Code
+                    </label>
                     <input
                       type="text"
                       placeholder="Enter pincode"
                       value={locationData.postalCode}
-                      onChange={(e) => setLocationData({...locationData, postalCode: e.target.value})}
+                      onChange={(e) =>
+                        setLocationData({
+                          ...locationData,
+                          postalCode: e.target.value,
+                        })
+                      }
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
                     />
                   </div>
                 </div>
-                
+
                 <div className="flex gap-3 pt-4">
                   <button
                     onClick={handleLocationUpdate}
@@ -253,7 +319,9 @@ const TutorSettingsPage = () => {
               </div>
             ) : (
               <div className="text-center py-12">
-                <p className="text-gray-500 mb-4">No location information added yet</p>
+                <p className="text-gray-500 mb-4">
+                  No location information added yet
+                </p>
                 <button
                   onClick={() => setIsEditingLocation(true)}
                   className="text-blue-500 hover:text-blue-600 font-medium"

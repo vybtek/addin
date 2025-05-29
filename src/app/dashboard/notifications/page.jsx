@@ -1,4 +1,4 @@
-import Head from 'next/head';
+
 
 const dummyNotifications = [
   { id: 1, message: "You have a new follower!", time: "2 hours ago" },
@@ -13,7 +13,7 @@ export default function Notifications() {
         <h1 className="text-3xl font-extrabold text-gray-700 dark:text-white mb-6 tracking-tight">
           Notifications
         </h1>
-        
+
         <div className="bg-white dark:bg-gray-800 rounded-xl p-6 transition-all duration-300">
           {dummyNotifications.length > 0 ? (
             <ul className="space-y-4">

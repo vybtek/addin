@@ -1,31 +1,37 @@
-import { CiCreditCard1 } from 'react-icons/ci';
-import { FaEye, FaTrash } from 'react-icons/fa';
+import { CiCreditCard1 } from "react-icons/ci";
+import { FaEye, FaTrash } from "react-icons/fa";
 
 const dummyFavorites = [
   {
     id: 1,
-    title: "Class:Nur (CBSE) | ALL Subjects | Female | N/A | Area: Meera Nagar, Udaipur | Addins - teaching jobs - Expert (₹ $ ₹)",
-    description: "Female Tutor for Nursery (ALL Subjects) Job Overview We are seeking a dedicated and compassionate Female Tutor to provide offline tutoring in all",
+    title:
+      "Class:Nur (CBSE) | ALL Subjects | Female | N/A | Area: Meera Nagar, Udaipur | Addins - teaching jobs - Expert (₹ $ ₹)",
+    description:
+      "Female Tutor for Nursery (ALL Subjects) Job Overview We are seeking a dedicated and compassionate Female Tutor to provide offline tutoring in all",
     price: "₹300.00",
     industry: "Academic Tutor",
-    time: "about 2 days ago"
+    time: "about 2 days ago",
   },
   {
     id: 2,
-    title: "Class: 5th (ICSE) | Math & Science | Male/Female | Area: Sector 14, Gurgaon | Addins - teaching jobs - Beginner",
-    description: "Tutor for Class 5th (Math & Science) Job Overview Looking for a skilled tutor to assist with Math and Science for a student in Sector 14, Gurgaon",
+    title:
+      "Class: 5th (ICSE) | Math & Science | Male/Female | Area: Sector 14, Gurgaon | Addins - teaching jobs - Beginner",
+    description:
+      "Tutor for Class 5th (Math & Science) Job Overview Looking for a skilled tutor to assist with Math and Science for a student in Sector 14, Gurgaon",
     price: "₹500.00",
     industry: "Education",
-    time: "about 5 days ago"
+    time: "about 5 days ago",
   },
   {
     id: 3,
-    title: "Class: 10th (CBSE) | Physics | Female | Area: Jubilee Hills, Hyderabad | Addins - teaching jobs - Expert",
-    description: "Female Physics Tutor for Class 10th (CBSE) Job Overview We need an expert female tutor for offline Physics tutoring in Jubilee Hills",
+    title:
+      "Class: 10th (CBSE) | Physics | Female | Area: Jubilee Hills, Hyderabad | Addins - teaching jobs - Expert",
+    description:
+      "Female Physics Tutor for Class 10th (CBSE) Job Overview We need an expert female tutor for offline Physics tutoring in Jubilee Hills",
     price: "₹800.00",
     industry: "Academic Tutor",
-    time: "about 1 week ago"
-  }
+    time: "about 1 week ago",
+  },
 ];
 
 export default function Favorites() {
@@ -33,7 +39,10 @@ export default function Favorites() {
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-6 py-16">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-6 flex items-center">
-          <span className="mr-2"><CiCreditCard1 className='text-3xl'/></span> My Favorite Projects
+          <span className="mr-2">
+            <CiCreditCard1 className="text-3xl" />
+          </span>{" "}
+          My Favorite Projects
         </h1>
 
         {dummyFavorites.length > 0 ? (

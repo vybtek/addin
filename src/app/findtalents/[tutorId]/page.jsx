@@ -197,28 +197,6 @@ const TutorDetails = () => {
 
   return (
     <div className="min-h-screen py-24 bg-gradient-to-b from-blue-50 to-gray-100 px-4 sm:px-6 lg:px-8">
-      <style jsx>{`
-        .hover-scale {
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .hover-scale:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-        .fade-in {
-          animation: fadeIn 0.5s ease-in;
-        }
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
       <div className="max-w-7xl mx-auto">
         {/* Back Button */}
         <button

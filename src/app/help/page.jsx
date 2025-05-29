@@ -1,349 +1,336 @@
 "use client";
-
-import { useState, useEffect, useCallback, memo } from "react";
+import { useState } from "react";
 import {
   ChevronDown,
   ChevronUp,
-  Calendar,
-  CreditCard,
   Users,
-  MessageSquare,
-  Mail,
-  Phone,
-  MapPin,
-  Clock,
+  Shield,
+  DollarSign,
+  Headphones,
+  Calendar,
 } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
 
-const faqSections = {
-  booking: [
-    {
-      question: "How do I make a reservation?",
-      answer:
-        "To make a reservation, search for your destination, select your check-in and check-out dates, specify the number of guests, and click 'Search'. Browse available properties, select your preferred accommodation, and follow the booking process to confirm with payment.",
-    },
-    {
-      question: "Can I book a hotel for someone else?",
-      answer:
-        "Yes! You can book on behalf of someone else. During the booking process, you'll have the option to enter the guest's information. Just make sure to include their name and contact details for check-in purposes.",
-    },
-    {
-      question: "How far in advance can I make a reservation?",
-      answer:
-        "Most properties allow bookings up to 12 months in advance. Some exclusive properties might have different policies, which will be clearly indicated on their listing page.",
-    },
-  ],
-  payment: [
-    {
-      question: "What payment methods are accepted?",
-      answer:
-        "We accept all major credit and debit cards (Visa, MasterCard, American Express), PayPal, Apple Pay, and Google Pay. Some properties may also offer pay-at-property options.",
-    },
-    {
-      question: "When will I be charged for my booking?",
-      answer:
-        "This depends on the property's policy. Some require immediate payment, while others only require a deposit or allow payment upon arrival. The payment terms are clearly displayed during the booking process.",
-    },
-    {
-      question: "Are there any hidden fees?",
-      answer:
-        "No, we believe in transparent pricing. All mandatory fees are displayed before you confirm your booking. Optional extras may be available at an additional cost, but these are clearly marked.",
-    },
-  ],
-  cancellation: [
-    {
-      question: "How do I cancel or modify my reservation?",
-      answer:
-        "Log into your account, go to 'My Bookings', select the reservation you wish to change, and click on 'Cancel' or 'Modify'. Cancellation policies vary by property and rate type, so please review the specific terms before making changes.",
-    },
-    {
-      question: "What is the cancellation policy?",
-      answer:
-        "Cancellation policies vary by property. These can range from free cancellation up to 24 hours before check-in to non-refundable bookings. The specific policy for your booking is displayed during the booking process and in your confirmation email.",
-    },
-    {
-      question: "Will I get a refund if I need to cancel?",
-      answer:
-        "Refunds depend on the property's cancellation policy and how far in advance you cancel. If you cancel within the free cancellation period, you'll receive a full refund. Outside this period, partial or no refunds may apply.",
-    },
-  ],
-  account: [
-    {
-      question: "How do I create an account?",
-      answer:
-        "Click on the 'Sign Up' button in the top right corner of the homepage. Enter your email address, create a password, and fill in your personal details. Verify your email address through the link we send you, and your account will be active.",
-    },
-    {
-      question: "I forgot my password. What should I do?",
-      answer:
-        "Click on 'Login', then select 'Forgot Password'. Enter the email address associated with your account, and we'll send you a password reset link. Follow the instructions in the email to create a new password.",
-    },
-    {
-      question: "How do I update my account information?",
-      answer:
-        "Log into your account, go to 'My Profile', and click 'Edit' next to the information you want to update. Make your changes and click 'Save' to update your profile.",
-    },
-  ],
-  rewards: [
-    {
-      question: "How does the rewards program work?",
-      answer:
-        "Our rewards program lets you earn points for every booking. For every $1 spent, you earn 10 points. These points can be redeemed for discounts on future bookings, room upgrades, or exclusive experiences.",
-    },
-    {
-      question: "How do I join the rewards program?",
-      answer:
-        "All registered users are automatically enrolled in our rewards program. Simply create an account and start booking to earn points. You can track your points balance in the 'My Rewards' section of your account.",
-    },
-    {
-      question: "When do my reward points expire?",
-      answer:
-        "Reward points are valid for 24 months from the date of your last activity. 'Activity' includes making a booking, staying at a property, or redeeming points. Keep your account active to maintain your points balance.",
-    },
-  ],
-};
+export default function FlipkartFAQ() {
+  const [activeCategory, setActiveCategory] = useState("General");
+  const [openQuestions, setOpenQuestions] = useState({});
 
-const featuredGuides = [
-  {
-    title: "Complete Booking Guide",
-    description:
-      "Step-by-step instructions for finding and booking your perfect stay",
-    icon: <Calendar className="h-8 w-8 text-indigo-500" />,
-  },
-  {
-    title: "Payment & Security",
-    description:
-      "Learn about our secure payment methods and protection policies",
-    icon: <CreditCard className="h-8 w-8 text-indigo-500" />,
-  },
-  {
-    title: "Traveling with Family",
-    description: "Tips for booking accommodations for family trips",
-    icon: <Users className="h-8 w-8 text-indigo-500" />,
-  },
-];
+  const toggleQuestion = (questionId) => {
+    setOpenQuestions((prev) => ({
+      ...prev,
+      [questionId]: !prev[questionId],
+    }));
+  };
 
-const ContactButton = memo(({ onClick, label, icon }) => (
-  <button
-    onClick={onClick}
-    className="flex items-center px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
-    aria-label={label}
-  >
-    {icon}
-    {label}
-  </button>
-));
+  const categories = [
+    { id: "General", label: "General", icon: Users },
+    { id: "Fees", label: "Fees & Charges", icon: DollarSign },
+    { id: "Account", label: "Managing Your Account", icon: Shield },
+    { id: "Services", label: "Services", icon: Headphones },
+    { id: "Support", label: "Fulfillment", icon: Calendar },
+    { id: "Shopping", label: "Addins", icon: Users },
+  ];
 
-const FAQSection = memo(({ section, faqs, isOpen, toggleSection }) => (
-  <div className="mb-6">
-    <button
-      onClick={() => toggleSection(section)}
-      className="w-full bg-white rounded-xl shadow-md hover:shadow-lg transition p-6 flex justify-between items-center"
-      aria-expanded={isOpen}
-      aria-controls={`faq-${section}`}
-    >
-      <h3 className="text-xl font-semibold text-gray-800 capitalize">
-        {section} Questions
-      </h3>
-      {isOpen ? (
-        <ChevronUp className="h-5 w-5 text-indigo-600" />
-      ) : (
-        <ChevronDown className="h-5 w-5 text-indigo-600" />
-      )}
-    </button>
-    {isOpen && (
-      <div id={`faq-${section}`} className="mt-2 space-y-2">
-        {faqs.map((faq, index) => (
-          <article
-            key={`${section}-${index}`}
-            className="bg-white rounded-xl shadow-sm p-6 border-l-4 border-indigo-500"
-          >
-            <h4 className="text-lg font-medium mb-3 text-gray-800">
-              {faq.question}
-            </h4>
-            <p className="text-gray-600">{faq.answer}</p>
-          </article>
-        ))}
-      </div>
-    )}
-  </div>
-));
+  const faqData = {
+    General: [
+      {
+        id: "g1",
+        question: "Why should I sell on Flipkart?",
+        answer:
+          "Selling on Flipkart gives you access to millions of customers across India, advanced logistics support, marketing tools, and a trusted platform that ensures secure transactions.",
+      },
+      {
+        id: "g2",
+        question: "How does selling on Flipkart.com work?",
+        answer:
+          "You can register as a seller, list your products, manage inventory, fulfill orders through our logistics network, and receive payments directly to your account.",
+      },
+      {
+        id: "g3",
+        question:
+          "What is the minimum listing quantity to sell on Flipkart.com?",
+        answer:
+          "There is no minimum listing quantity requirement. You can start selling with even a single product in most categories.",
+      },
+      {
+        id: "g4",
+        question: "What products can I sell on Flipkart.com?",
+        answer:
+          "You can sell a wide range of products including electronics, fashion, home & kitchen, books, sports, automotive parts, and many more categories.",
+      },
+      {
+        id: "g5",
+        question: "What do I need to register to sell on Flipkart.com?",
+        answer:
+          "You need valid business documents like GST certificate, PAN card, bank account details, and address proof to register as a seller.",
+      },
+      {
+        id: "g6",
+        question: "I don't have a website- can I still sell on Flipkart.com?",
+        answer:
+          "Yes, you don't need your own website to sell on Flipkart. Our platform provides all the tools you need to showcase and sell your products.",
+      },
+      {
+        id: "g7",
+        question: "What is FAssured?",
+        answer:
+          "FAssured is a quality certification program that highlights products meeting Flipkart's quality standards for faster delivery, easy returns, and reliable service.",
+      },
+      {
+        id: "g8",
+        question: "Can I offer both products and services on Flipkart.com?",
+        answer:
+          "Currently, Flipkart primarily focuses on physical products. However, certain service categories may be available in specific programs.",
+      },
+    ],
+    Fees: [
+      {
+        id: "f1",
+        question: "Who decides the price of my products?",
+        answer:
+          "As a seller, you have complete control over pricing your products. You can set competitive prices based on market research and your business strategy.",
+      },
+      {
+        id: "f2",
+        question: "What are the charges for selling on Flipkart.com?",
+        answer:
+          "Flipkart charges a commission fee that varies by category, typically ranging from 2-20%. Additional charges may apply for fulfillment services.",
+      },
+      {
+        id: "f3",
+        question: "Will I get charged for listing products on Flipkart.com?",
+        answer:
+          "No, listing products on Flipkart is completely free. You only pay commission when you make a sale.",
+      },
+      {
+        id: "f4",
+        question: "How and when do I get paid?",
+        answer:
+          "Payments are processed within 7-15 days after successful delivery and completion of the return window. Funds are directly transferred to your registered bank account.",
+      },
+    ],
+    Account: [
+      {
+        id: "a1",
+        question: "How do I list my products on Flipkart.com?",
+        answer:
+          "You can list products through the Seller Hub dashboard by providing product details, images, pricing, and inventory information.",
+      },
+      {
+        id: "a2",
+        question: "How do I manage my orders on Flipkart.com?",
+        answer:
+          "Use the Seller Hub to track orders, manage inventory, process shipments, handle returns, and communicate with customers.",
+      },
+      {
+        id: "a3",
+        question: "What do I need to list my products on Flipkart.com?",
+        answer:
+          "You need high-quality product images, detailed descriptions, accurate pricing, inventory count, and proper product categorization.",
+      },
+      {
+        id: "a4",
+        question:
+          "Can I get help with catalogue development (product images, descriptions, etc.)?",
+        answer:
+          "Yes, Flipkart offers catalogue support services and guidelines to help you create compelling product listings that drive sales.",
+      },
+    ],
+    Services: [
+      {
+        id: "a1",
+        question: "How do I list my products on Flipkart.com?",
+        answer:
+          "You can list products through the Seller Hub dashboard by providing product details, images, pricing, and inventory information.",
+      },
+      {
+        id: "a2",
+        question: "How do I manage my orders on Flipkart.com?",
+        answer:
+          "Use the Seller Hub to track orders, manage inventory, process shipments, handle returns, and communicate with customers.",
+      },
+      {
+        id: "a3",
+        question: "What do I need to list my products on Flipkart.com?",
+        answer:
+          "You need high-quality product images, detailed descriptions, accurate pricing, inventory count, and proper product categorization.",
+      },
+      {
+        id: "a4",
+        question:
+          "Can I get help with catalogue development (product images, descriptions, etc.)?",
+        answer:
+          "Yes, Flipkart offers catalogue support services and guidelines to help you create compelling product listings that drive sales.",
+      },
+    ],
+    Support: [
+      {
+        id: "a1",
+        question: "How do I list my products on Flipkart.com?",
+        answer:
+          "You can list products through the Seller Hub dashboard by providing product details, images, pricing, and inventory information.",
+      },
+      {
+        id: "a2",
+        question: "How do I manage my orders on Flipkart.com?",
+        answer:
+          "Use the Seller Hub to track orders, manage inventory, process shipments, handle returns, and communicate with customers.",
+      },
+      {
+        id: "a3",
+        question: "What do I need to list my products on Flipkart.com?",
+        answer:
+          "You need high-quality product images, detailed descriptions, accurate pricing, inventory count, and proper product categorization.",
+      },
+      {
+        id: "a4",
+        question:
+          "Can I get help with catalogue development (product images, descriptions, etc.)?",
+        answer:
+          "Yes, Flipkart offers catalogue support services and guidelines to help you create compelling product listings that drive sales.",
+      },
+    ],
+    Shopping: [
+      {
+        id: "a1",
+        question: "How do I list my products on Flipkart.com?",
+        answer:
+          "You can list products through the Seller Hub dashboard by providing product details, images, pricing, and inventory information.",
+      },
+      {
+        id: "a2",
+        question: "How do I manage my orders on Flipkart.com?",
+        answer:
+          "Use the Seller Hub to track orders, manage inventory, process shipments, handle returns, and communicate with customers.",
+      },
+      {
+        id: "a3",
+        question: "What do I need to list my products on Flipkart.com?",
+        answer:
+          "You need high-quality product images, detailed descriptions, accurate pricing, inventory count, and proper product categorization.",
+      },
+      {
+        id: "a4",
+        question:
+          "Can I get help with catalogue development (product images, descriptions, etc.)?",
+        answer:
+          "Yes, Flipkart offers catalogue support services and guidelines to help you create compelling product listings that drive sales.",
+      },
+    ],
+  };
 
-const HelpPage = () => {
-  const [isClient, setIsClient] = useState(false);
-  const [openSection, setOpenSection] = useState("booking");
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  const toggleSection = useCallback((section) => {
-    setOpenSection((prev) => (prev === section ? null : section));
-  }, []);
-
-  if (!isClient) return null;
+  const stats = [
+    { icon: Users, number: "45 crore+", text: "Flipkart customers" },
+    { icon: Shield, number: "7*", text: "days secure & regular payments" },
+    { icon: DollarSign, number: "Low cost", text: "of doing business" },
+    { icon: Headphones, number: "One click", text: "Seller Support" },
+    {
+      icon: Calendar,
+      number: "Access to",
+      text: "The Big Billion Days & more",
+    },
+  ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-indigo-50">
-      <header className="fixed top-0 w-full z-50 bg-white border-b shadow-sm hover:shadow-md transition-shadow">
-        <div className="container mx-auto px-6 py-3 flex justify-between items-center">
-          <Link href="/" className="group">
-            <Image
-              src="/logo.png"
-              alt="Company Logo"
-              width={140}
-              height={48}
-              className="transition-transform group-hover:scale-105"
-              priority
-            />
-          </Link>
-          <Link
-            href="/help"
-            className="relative px-1 py-2 text-blue-600 hover:text-indigo-600 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-indigo-600 after:w-0 hover:after:w-full after:transition-all"
-          >
-            Help
-          </Link>
+    <div className="min-h-screen bg-gray-50 py-16">
+      {/* Header */}
+      <div className="bg-white border-b">
+        <div className="max-w-7xl mx-auto px-4 py-4">
+          <div className="flex flex-col lg:flex-row justify-center items-start lg:items-center">
+            <div className="mb-6 lg:mb-0">
+              <h1 className="text-2xl font-medium justify-start text-gray-800 mb-4">
+                Frequently Asked Questions
+              </h1>
+
+              {/* Stats */}
+              {/* <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                {stats.map((stat, index) => {
+                  const IconComponent = stat.icon;
+                  return (
+                    <div key={index} className="text-center">
+                      <div className="flex justify-center mb-2">
+                        <IconComponent className="w-8 h-8 text-blue-600" />
+                      </div>
+                      <div className="text-sm font-medium text-blue-600">{stat.number}</div>
+                      <div className="text-xs text-gray-600">{stat.text}</div>
+                    </div>
+                  );
+                })}
+              </div> */}
+            </div>
+          </div>
         </div>
-      </header>
+      </div>
 
-      <main className="max-w-6xl mx-auto px-4 py-12 mt-14">
-        <section className="mb-16">
-          <h2 className="text-2xl md:text-3xl font-bold mb-8 text-gray-800">
-            Featured Help Guides
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {featuredGuides.map(({ title, description, icon }, index) => (
-              <article
-                key={index}
-                className="bg-white rounded-xl shadow-md hover:shadow-lg transition p-6 border border-indigo-100"
-              >
-                <div className="mb-4">{icon}</div>
-                <h3 className="text-xl font-semibold mb-2 text-gray-800">
-                  {title}
-                </h3>
-                <p className="text-gray-600">{description}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="mb-16">
-          <h2 className="text-2xl md:text-3xl font-bold mb-8 text-gray-800">
-            Frequently Asked Questions
-          </h2>
-          {Object.entries(faqSections).map(([section, faqs]) => (
-            <FAQSection
-              key={section}
-              section={section}
-              faqs={faqs}
-              isOpen={openSection === section}
-              toggleSection={toggleSection}
-            />
-          ))}
-        </section>
-
-        <section className="mb-16">
-          <h2 className="text-2xl md:text-3xl font-bold mb-8 text-gray-800">
-            Still Need Help?
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-white rounded-xl shadow-md p-6 border-t-4 border-indigo-500">
-              <div className="mb-4 flex items-center">
-                <MessageSquare className="h-6 w-6 text-indigo-600 mr-2" />
-                <h3 className="text-xl font-semibold text-gray-800">
-                  Chat With Us
-                </h3>
-              </div>
-              <p className="text-gray-600 mb-4">
-                Get immediate assistance via WhatsApp.
-              </p>
-              <ContactButton
-                onClick={() =>
-                  window.open("https://wa.me/919001992597", "_blank")
-                }
-                icon={<MessageSquare className="h-5 w-5 mr-2" />}
-                label="Start Chat"
-              />
-            </div>
-            <div className="bg-white rounded-xl shadow-md p-6 border-t-4 border-emerald-500">
-              <div className="mb-4 flex items-center">
-                <Mail className="h-6 w-6 text-emerald-600 mr-2" />
-                <h3 className="text-xl font-semibold text-gray-800">
-                  Email Support
-                </h3>
-              </div>
-              <p className="text-gray-600 mb-4">
-                We'll respond within 24 hours.
-              </p>
-              <ContactButton
-                onClick={() =>
-                  (window.location.href =
-                    "mailto:plan.regalweddings@gmail.com?subject=Support Request")
-                }
-                icon={<Mail className="h-5 w-5 mr-2" />}
-                label="Email Us"
-              />
-            </div>
-          </div>
-        </section>
-
-        <section>
-          <h2 className="text-2xl md:text-3xl font-bold mb-8 text-gray-800">
-            Support Information
-          </h2>
-          <div className="bg-white rounded-xl shadow-md p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="space-y-4">
-              <div className="flex items-center">
-                <Phone className="h-5 w-5 text-indigo-600 mr-3" />
-                <div>
-                  <h4 className="font-medium text-gray-800">Call Us</h4>
-                  <a
-                    href="tel:+919001992597"
-                    className="text-gray-600 hover:text-indigo-600 transition-colors"
+      <div className="max-w-7xl mx-auto px-4 py-6">
+        <div className="flex flex-col lg:flex-row gap-6">
+          {/* Sidebar */}
+          <div className="lg:w-80 bg-white rounded-lg shadow-sm h-fit">
+            <div className="p-4">
+              {categories.map((category) => {
+                const IconComponent = category.icon;
+                return (
+                  <button
+                    key={category.id}
+                    onClick={() => setActiveCategory(category.id)}
+                    className={`cursor-pointer w-full text-left px-4 py-3 rounded-lg mb-2 flex items-center transition-colors ${
+                      activeCategory === category.id
+                        ? "bg-blue-50 text-blue-600 border-l-4 border-blue-600"
+                        : "text-gray-700 hover:bg-gray-50"
+                    }`}
                   >
-                    +91 9001992597
-                  </a>
-                </div>
-              </div>
-              <div className="flex items-center">
-                <Mail className="h-5 w-5 text-indigo-600 mr-3" />
-                <div>
-                  <h4 className="font-medium text-gray-800">Email</h4>
-                  <a
-                    href="mailto:plan.regalweddings@gmail.com"
-                    className="text-gray-600 hover:text-indigo-600 transition-colors"
-                  >
-                    plan.regalweddings@gmail.com
-                  </a>
-                </div>
-              </div>
-              <div className="flex items-center">
-                <MapPin className="h-5 w-5 text-indigo-600 mr-3" />
-                <div>
-                  <h4 className="font-medium text-gray-800">Office</h4>
-                  <p className="text-gray-600">
-                    01 Kala Rohi Rani Rd, Udaipur, Rajasthan
-                  </p>
-                </div>
-              </div>
+                    <IconComponent className="w-4 h-4 mr-3" />
+                    <span className="text-sm font-medium">
+                      {category.label}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
-            <div className="flex items-center">
-              <Clock className="h-5 w-5 text-indigo-600 mr-3" />
-              <div>
-                <h4 className="font-medium text-gray-800">Time Table</h4>
-                <p className="text-gray-600">
-                  Check In: 2:00 PM
-                  <br />
-                  Check Out: 12:00 PM
-                </p>
+          </div>
+
+          {/* Main Content */}
+          <div className="flex-1">
+            <div className="bg-white rounded-lg shadow-sm">
+              <div className="p-6 border-b">
+                <h2 className="text-lg font-medium text-gray-800 flex items-center">
+                  {activeCategory}
+                  <div className="w-8 h-0.5 bg-blue-600 ml-4"></div>
+                </h2>
+              </div>
+
+              <div className="divide-y divide-gray-100">
+                {faqData[activeCategory]?.map((faq) => (
+                  <div key={faq.id}>
+                    <button
+                      onClick={() => toggleQuestion(faq.id)}
+                      className="w-full text-left px-6 py-4 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition-colors"
+                    >
+                      <div className="flex justify-between items-center cursor-pointer">
+                        <span className="text-sm text-gray-800 pr-4 leading-5">
+                          {faq.question}
+                        </span>
+                        {openQuestions[faq.id] ? (
+                          <ChevronUp className="w-5 h-5 cursor-pointer text-gray-400 flex-shrink-0" />
+                        ) : (
+                          <ChevronDown className="w-5 cursor-pointer h-5 text-gray-400 flex-shrink-0" />
+                        )}
+                      </div>
+                    </button>
+
+                    {openQuestions[faq.id] && (
+                      <div className="px-6 pb-4">
+                        <div className="text-sm text-gray-600 leading-relaxed bg-gray-50 p-4 rounded-lg">
+                          {faq.answer}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))}
               </div>
             </div>
           </div>
-        </section>
-      </main>
+        </div>
+      </div>
     </div>
   );
-};
-
-export default memo(HelpPage);
+}

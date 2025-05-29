@@ -1,6 +1,4 @@
 "use client";
-
-import Header from "@/components/dashboard/Home/Header";
 import Sidebar from "@/components/dashboard/Home/Sidebar";
 
 const Layout = ({ children }) => {

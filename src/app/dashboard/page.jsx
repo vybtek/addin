@@ -33,7 +33,6 @@ const RecentClasses = () => (
 export default function Dashboard() {
   return (
     <div className="flex min-h-screen bg-gray-50">
-
       <div className="flex-1 py-24">
         <Header />
         <div className="p-2">

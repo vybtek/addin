@@ -38,20 +38,19 @@ export default function Footer() {
     {
       title: "Company",
       links: [
-        { name: "About Us", href: "#" },
-        { name: "Contact Us", href: "#" },
-        { name: "Enterprise", href: "#" },
-        { name: "Privacy Policy", href: "#" },
-        { name: "Refund Policy", href: "#" },
-        { name: "Terms & Conditions", href: "#" },
+        { name: "About Us", href: "/about-us" },
+        { name: "Contact Us", href: "/contact-us" },
+        { name: "Privacy Policy", href: "/privacy-policy" },
+        { name: "Refund Policy", href: "/refund-policy" },
+        { name: "Terms & Conditions", href: "/terms-and-conditions" },
       ],
     },
     {
       title: "Resources",
       links: [
-        { name: "FAQs", href: "#" },
-        { name: "How it works", href: "#" },
-        { name: "Membership", href: "#" },
+        { name: "FAQs", href: "/help" },
+        { name: "How it works", href: "/how-it-works" },
+        { name: "Membership", href: "/dashboard/membership" },
       ],
     },
   ];

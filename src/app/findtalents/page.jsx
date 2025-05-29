@@ -4,7 +4,6 @@ import { useState } from "react";
 import Sidebar from "../../components/FindTalents/Sidebar";
 import TutorCard from "../../components/FindTalents/TutorCard";
 
-// Main Page Component
 export default function FindTalentsPage() {
   const [tutors, setTutors] = useState([
     {
