@@ -272,11 +272,10 @@ export default function FlipkartFAQ() {
                   <button
                     key={category.id}
                     onClick={() => setActiveCategory(category.id)}
-                    className={`cursor-pointer w-full text-left px-4 py-3 rounded-lg mb-2 flex items-center transition-colors ${
-                      activeCategory === category.id
+                    className={`cursor-pointer w-full text-left px-4 py-3 rounded-lg mb-2 flex items-center transition-colors ${activeCategory === category.id
                         ? "bg-blue-50 text-blue-600 border-l-4 border-blue-600"
                         : "text-gray-700 hover:bg-gray-50"
-                    }`}
+                      }`}
                   >
                     <IconComponent className="w-4 h-4 mr-3" />
                     <span className="text-sm font-medium">
