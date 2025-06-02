@@ -223,9 +223,8 @@ const Modal = ({ isOpen, onClose, onSave, title, children }) => {
 // Toast Component
 const Toast = ({ message, type }) => (
   <div
-    className={`fixed bottom-4 right-4 p-4 rounded-lg shadow-lg text-white ${
-      type === "success" ? "bg-green-500" : "bg-red-500"
-    }`}
+    className={`fixed bottom-4 right-4 p-4 rounded-lg shadow-lg text-white ${type === "success" ? "bg-green-500" : "bg-red-500"
+      }`}
   >
     {message}
   </div>
@@ -262,11 +261,10 @@ const EditModalContent = ({ section, modalData, errors, onChange }) => {
           </p>
           <input
             type="text"
-            className={`w-full p-2 border rounded-lg focus:outline-none focus:ring-2 ${
-              errors.title
+            className={`w-full p-2 border rounded-lg focus:outline-none focus:ring-2 ${errors.title
                 ? "border-red-500 focus:ring-red-500"
                 : "border-gray-300 focus:ring-blue-500"
-            }`}
+              }`}
             value={modalData.title}
             onChange={(e) => onChange(section, "title", e.target.value)}
           />
@@ -286,11 +284,10 @@ const EditModalContent = ({ section, modalData, errors, onChange }) => {
             they are looking for.
           </p>
           <textarea
-            className={`w-full p-2 border rounded-lg focus:outline-none focus:ring-2 ${
-              errors.about
+            className={`w-full p-2 border rounded-lg focus:outline-none focus:ring-2 ${errors.about
                 ? "border-red-500 focus:ring-red-500"
                 : "border-gray-300 focus:ring-blue-500"
-            }`}
+              }`}
             value={modalData.about}
             onChange={(e) => onChange(section, "about", e.target.value)}
             rows="5"
@@ -309,11 +306,10 @@ const EditModalContent = ({ section, modalData, errors, onChange }) => {
           </p>
           <input
             type="text"
-            className={`w-full p-2 border rounded-lg focus:outline-none focus:ring-2 ${
-              errors.classes
+            className={`w-full p-2 border rounded-lg focus:outline-none focus:ring-2 ${errors.classes
                 ? "border-red-500 focus:ring-red-500"
                 : "border-gray-300 focus:ring-blue-500"
-            }`}
+              }`}
             value={modalData.classes}
             onChange={(e) => onChange(section, "classes", e.target.value)}
           />
@@ -332,11 +328,10 @@ const EditModalContent = ({ section, modalData, errors, onChange }) => {
               </label>
               <input
                 type="text"
-                className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 text-sm sm:text-base ${
-                  errors.institute
+                className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 text-sm sm:text-base ${errors.institute
                     ? "border-red-500 focus:ring-red-500"
                     : "border-gray-300 focus:ring-blue-500"
-                }`}
+                  }`}
                 value={modalData.teaching.institute}
                 onChange={(e) => onChange(section, "institute", e.target.value)}
                 placeholder="Enter institute name"
@@ -353,11 +348,10 @@ const EditModalContent = ({ section, modalData, errors, onChange }) => {
               </label>
               <input
                 type="text"
-                className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 text-sm sm:text-base ${
-                  errors.jobTitle
+                className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 text-sm sm:text-base ${errors.jobTitle
                     ? "border-red-500 focus:ring-red-500"
                     : "border-gray-300 focus:ring-blue-500"
-                }`}
+                  }`}
                 value={modalData.teaching.jobTitle}
                 onChange={(e) => onChange(section, "jobTitle", e.target.value)}
                 placeholder="Enter job title"
@@ -375,11 +369,10 @@ const EditModalContent = ({ section, modalData, errors, onChange }) => {
                 City
               </label>
               <select
-                className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 text-sm sm:text-base ${
-                  errors.city
+                className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 text-sm sm:text-base ${errors.city
                     ? "border-red-500 focus:ring-red-500"
                     : "border-gray-300 focus:ring-blue-500"
-                }`}
+                  }`}
                 value={modalData.teaching.city}
                 onChange={(e) => onChange(section, "city", e.target.value)}
               >
@@ -401,11 +394,10 @@ const EditModalContent = ({ section, modalData, errors, onChange }) => {
                 State
               </label>
               <select
-                className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 text-sm sm:text-base ${
-                  errors.state
+                className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 text-sm sm:text-base ${errors.state
                     ? "border-red-500 focus:ring-red-500"
                     : "border-gray-300 focus:ring-blue-500"
-                }`}
+                  }`}
                 value={modalData.teaching.state}
                 onChange={(e) => onChange(section, "state", e.target.value)}
               >
@@ -428,11 +420,10 @@ const EditModalContent = ({ section, modalData, errors, onChange }) => {
               Teaching Role
             </label>
             <select
-              className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 text-sm sm:text-base ${
-                errors.role
+              className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 text-sm sm:text-base ${errors.role
                   ? "border-red-500 focus:ring-red-500"
                   : "border-gray-300 focus:ring-blue-500"
-              }`}
+                }`}
               value={modalData.teaching.role}
               onChange={(e) => onChange(section, "role", e.target.value)}
             >
@@ -455,11 +446,10 @@ const EditModalContent = ({ section, modalData, errors, onChange }) => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <select
-                  className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 text-sm sm:text-base ${
-                    errors.fromMonth
+                  className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 text-sm sm:text-base ${errors.fromMonth
                       ? "border-red-500 focus:ring-red-500"
                       : "border-gray-300 focus:ring-blue-500"
-                  }`}
+                    }`}
                   value={modalData.teaching.fromMonth}
                   onChange={(e) =>
                     onChange(section, "fromMonth", e.target.value)
@@ -480,11 +470,10 @@ const EditModalContent = ({ section, modalData, errors, onChange }) => {
               </div>
               <div>
                 <select
-                  className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 text-sm sm:text-base ${
-                    errors.fromYear
+                  className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 text-sm sm:text-base ${errors.fromYear
                       ? "border-red-500 focus:ring-red-500"
                       : "border-gray-300 focus:ring-blue-500"
-                  }`}
+                    }`}
                   value={modalData.teaching.fromYear}
                   onChange={(e) =>
                     onChange(section, "fromYear", e.target.value)
@@ -512,11 +501,10 @@ const EditModalContent = ({ section, modalData, errors, onChange }) => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <select
-                  className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 text-sm sm:text-base ${
-                    errors.toMonth
+                  className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 text-sm sm:text-base ${errors.toMonth
                       ? "border-red-500 focus:ring-red-500"
                       : "border-gray-300 focus:ring-blue-500"
-                  }`}
+                    }`}
                   value={modalData.teaching.toMonth}
                   onChange={(e) => onChange(section, "toMonth", e.target.value)}
                   disabled={modalData.teaching.currentlyWorking}
@@ -536,11 +524,10 @@ const EditModalContent = ({ section, modalData, errors, onChange }) => {
               </div>
               <div>
                 <select
-                  className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 text-sm sm:text-base ${
-                    errors.toYear
+                  className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 text-sm sm:text-base ${errors.toYear
                       ? "border-red-500 focus:ring-red-500"
                       : "border-gray-300 focus:ring-blue-500"
-                  }`}
+                    }`}
                   value={modalData.teaching.toYear}
                   onChange={(e) => onChange(section, "toYear", e.target.value)}
                   disabled={modalData.teaching.currentlyWorking}
@@ -598,11 +585,10 @@ const EditModalContent = ({ section, modalData, errors, onChange }) => {
             </label>
             <input
               type="text"
-              className={`w-full p-2 border rounded-lg focus:outline-none focus:ring-2 ${
-                errors.institute
+              className={`w-full p-2 border rounded-lg focus:outline-none focus:ring-2 ${errors.institute
                   ? "border-red-500 focus:ring-red-500"
                   : "border-gray-300 focus:ring-blue-500"
-              }`}
+                }`}
               value={modalData.education.institute}
               onChange={(e) => onChange(section, "institute", e.target.value)}
             />
@@ -616,11 +602,10 @@ const EditModalContent = ({ section, modalData, errors, onChange }) => {
             </label>
             <div className="flex gap-2">
               <select
-                className={`w-1/2 p-2 border rounded-lg focus:outline-none focus:ring-2 ${
-                  errors.fromYear
+                className={`w-1/2 p-2 border rounded-lg focus:outline-none focus:ring-2 ${errors.fromYear
                     ? "border-red-500 focus:ring-red-500"
                     : "border-gray-300 focus:ring-blue-500"
-                }`}
+                  }`}
                 value={modalData.education.fromYear}
                 onChange={(e) => onChange(section, "fromYear", e.target.value)}
               >
@@ -632,11 +617,10 @@ const EditModalContent = ({ section, modalData, errors, onChange }) => {
                 ))}
               </select>
               <select
-                className={`w-1/2 p-2 border rounded-lg focus:outline-none focus:ring-2 ${
-                  errors.toYear
+                className={`w-1/2 p-2 border rounded-lg focus:outline-none focus:ring-2 ${errors.toYear
                     ? "border-red-500 focus:ring-red-500"
                     : "border-gray-300 focus:ring-blue-500"
-                }`}
+                  }`}
                 value={modalData.education.toYear}
                 onChange={(e) => onChange(section, "toYear", e.target.value)}
               >
@@ -701,11 +685,10 @@ const EditModalContent = ({ section, modalData, errors, onChange }) => {
               </label>
               <input
                 type="text"
-                className={`w-full p-2 border rounded-lg focus:outline-none focus:ring-2 ${
-                  errors.title
+                className={`w-full p-2 border rounded-lg focus:outline-none focus:ring-2 ${errors.title
                     ? "border-red-500 focus:ring-red-500"
                     : "border-gray-300 focus:ring-blue-500"
-                }`}
+                  }`}
                 value={modalData.awards.title}
                 onChange={(e) => onChange(section, "title", e.target.value)}
               />
@@ -718,11 +701,10 @@ const EditModalContent = ({ section, modalData, errors, onChange }) => {
                 Category
               </label>
               <select
-                className={`w-full p-2 border rounded-lg focus:outline-none focus:ring-2 ${
-                  errors.category
+                className={`w-full p-2 border rounded-lg focus:outline-none focus:ring-2 ${errors.category
                     ? "border-red-500 focus:ring-red-500"
                     : "border-gray-300 focus:ring-blue-500"
-                }`}
+                  }`}
                 value={modalData.awards.category}
                 onChange={(e) => onChange(section, "category", e.target.value)}
               >
@@ -793,11 +775,10 @@ const EditModalContent = ({ section, modalData, errors, onChange }) => {
             </label>
             <input
               type="text"
-              className={`w-full p-2 border rounded-lg focus:outline-none focus:ring-2 ${
-                errors.mapLocation
+              className={`w-full p-2 border rounded-lg focus:outline-none focus:ring-2 ${errors.mapLocation
                   ? "border-red-500 focus:ring-red-500"
                   : "border-gray-300 focus:ring-blue-500"
-              }`}
+                }`}
               value={modalData.location.mapLocation}
               onChange={(e) => onChange(section, "mapLocation", e.target.value)}
               placeholder="Your address will not show to clients or others"
@@ -812,11 +793,10 @@ const EditModalContent = ({ section, modalData, errors, onChange }) => {
             </label>
             <input
               type="text"
-              className={`w-full p-2 border rounded-lg focus:outline-none focus:ring-2 ${
-                errors.areaName
+              className={`w-full p-2 border rounded-lg focus:outline-none focus:ring-2 ${errors.areaName
                   ? "border-red-500 focus:ring-red-500"
                   : "border-gray-300 focus:ring-blue-500"
-              }`}
+                }`}
               value={modalData.location.areaName}
               onChange={(e) => onChange(section, "areaName", e.target.value)}
               placeholder="Enter locality"
@@ -836,21 +816,19 @@ const EditModalContent = ({ section, modalData, errors, onChange }) => {
             </label>
             <div className="flex gap-2 mb-4">
               <button
-                className={`px-4 py-2 rounded-lg transition ${
-                  modalData.hourlyRate.type === "hourly"
+                className={`px-4 py-2 rounded-lg transition ${modalData.hourlyRate.type === "hourly"
                     ? "bg-blue-500 text-white"
                     : "border border-gray-300 hover:bg-gray-100"
-                }`}
+                  }`}
                 onClick={() => onChange(section, "type", "hourly")}
               >
                 Hourly Class Rate
               </button>
               <button
-                className={`px-4 py-2 rounded-lg transition ${
-                  modalData.hourlyRate.type === "monthly"
+                className={`px-4 py-2 rounded-lg transition ${modalData.hourlyRate.type === "monthly"
                     ? "bg-blue-500 text-white"
                     : "border border-gray-300 hover:bg-gray-100"
-                }`}
+                  }`}
                 onClick={() => onChange(section, "type", "monthly")}
               >
                 Monthly Class Rate
@@ -864,11 +842,10 @@ const EditModalContent = ({ section, modalData, errors, onChange }) => {
             </label>
             <input
               type="number"
-              className={`w-full p-2 border rounded-lg focus:outline-none focus:ring-2 ${
-                errors.rate
+              className={`w-full p-2 border rounded-lg focus:outline-none focus:ring-2 ${errors.rate
                   ? "border-red-500 focus:ring-red-500"
                   : "border-gray-300 focus:ring-blue-500"
-              }`}
+                }`}
               value={modalData.hourlyRate.rate}
               onChange={(e) => onChange(section, "rate", e.target.value)}
               placeholder={`Enter ${modalData.hourlyRate.type} rate`}
@@ -888,21 +865,19 @@ const EditModalContent = ({ section, modalData, errors, onChange }) => {
             </label>
             <div className="flex gap-2 mb-4">
               <button
-                className={`px-4 py-2 rounded-lg transition ${
-                  modalData.availability.status === "available"
+                className={`px-4 py-2 rounded-lg transition ${modalData.availability.status === "available"
                     ? "bg-blue-500 text-white"
                     : "border border-gray-300 hover:bg-gray-100"
-                }`}
+                  }`}
                 onClick={() => onChange(section, "status", "available")}
               >
                 Available
               </button>
               <button
-                className={`px-4 py-2 rounded-lg transition ${
-                  modalData.availability.status === "not available"
+                className={`px-4 py-2 rounded-lg transition ${modalData.availability.status === "not available"
                     ? "bg-blue-500 text-white"
                     : "border border-gray-300 hover:bg-gray-100"
-                }`}
+                  }`}
                 onClick={() => onChange(section, "status", "not available")}
               >
                 Not Available
@@ -945,11 +920,10 @@ const EditModalContent = ({ section, modalData, errors, onChange }) => {
             {["offline", "online", "both"].map((mode) => (
               <button
                 key={mode}
-                className={`px-4 py-2 rounded-lg transition ${
-                  modalData.teachingMode === mode
+                className={`px-4 py-2 rounded-lg transition ${modalData.teachingMode === mode
                     ? "bg-blue-500 text-white"
                     : "border border-gray-300 hover:bg-gray-100"
-                }`}
+                  }`}
                 onClick={() => onChange(section, "teachingMode", mode)}
               >
                 {mode.charAt(0).toUpperCase() + mode.slice(1)}
@@ -966,11 +940,10 @@ const EditModalContent = ({ section, modalData, errors, onChange }) => {
           </label>
           <input
             type="text"
-            className={`w-full p-2 border rounded-lg focus:outline-none focus:ring-2 ${
-              errors.language
+            className={`w-full p-2 border rounded-lg focus:outline-none focus:ring-2 ${errors.language
                 ? "border-red-500 focus:ring-red-500"
                 : "border-gray-300 focus:ring-blue-500"
-            }`}
+              }`}
             value={modalData.language}
             onChange={(e) => onChange(section, "language", e.target.value)}
             placeholder="Enter primary language"
@@ -1072,46 +1045,46 @@ export default function ProfilePage() {
         teaching:
           section === "teaching"
             ? {
-                institute: "",
-                jobTitle: "",
-                city: "",
-                state: "",
-                role: "",
-                fromMonth: "",
-                fromYear: "",
-                toMonth: "",
-                toYear: "",
-                currentlyWorking: false,
-                description: "",
-              }
+              institute: "",
+              jobTitle: "",
+              city: "",
+              state: "",
+              role: "",
+              fromMonth: "",
+              fromYear: "",
+              toMonth: "",
+              toYear: "",
+              currentlyWorking: false,
+              description: "",
+            }
             : prev.teaching,
         education:
           section === "education"
             ? {
-                institute: "",
-                fromYear: "",
-                toYear: "",
-                degree: "",
-                areaOfStudy: "",
-                description: "",
-              }
+              institute: "",
+              fromYear: "",
+              toYear: "",
+              degree: "",
+              areaOfStudy: "",
+              description: "",
+            }
             : prev.education,
         awards:
           section === "awards"
             ? {
-                title: "",
-                category: "",
-                url: "",
-                completionDate: "",
-                overview: "",
-              }
+              title: "",
+              category: "",
+              url: "",
+              completionDate: "",
+              overview: "",
+            }
             : prev.awards,
         location:
           section === "location"
             ? {
-                mapLocation: profileData.location,
-                areaName: profileData.location,
-              }
+              mapLocation: profileData.location,
+              areaName: profileData.location,
+            }
             : prev.location,
         hourlyRate:
           section === "hourlyRate"
@@ -1338,9 +1311,8 @@ export default function ProfilePage() {
       }));
 
       setToast({
-        message: `${
-          section.charAt(0).toUpperCase() + section.slice(1)
-        } updated successfully!`,
+        message: `${section.charAt(0).toUpperCase() + section.slice(1)
+          } updated successfully!`,
         type: "success",
       });
       setTimeout(() => setToast(null), 3000);

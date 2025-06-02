@@ -1,5 +1,4 @@
 
-
 const dummyNotifications = [
   { id: 1, message: "You have a new follower!", time: "2 hours ago" },
   { id: 2, message: "Your post got 10 likes.", time: "5 hours ago" },

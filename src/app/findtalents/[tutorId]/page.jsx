@@ -333,11 +333,10 @@ const TutorDetails = () => {
                   {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
-                      className={`w-5 h-5 ${
-                        i < Math.floor(tutor.rating)
+                      className={`w-5 h-5 ${i < Math.floor(tutor.rating)
                           ? "text-yellow-400 fill-current"
                           : "text-gray-300"
-                      }`}
+                        }`}
                     />
                   ))}
                 </div>
