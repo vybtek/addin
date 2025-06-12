@@ -49,13 +49,13 @@ export default function HeroBanner() {
                 className="w-full px-6 py-4 rounded-l-full sm:rounded-r-none rounded-r-full bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-600 shadow-md"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                suppressHydrationWarning // Suppress hydration mismatch for fdprocessedid
+                suppressHydrationWarning
               />
             </div>
             <button
               onClick={handleSearch}
               className="bg-indigo-700 hover:bg-indigo-800 text-white font-medium py-4 px-8 rounded-r-full sm:rounded-l-none rounded-l-full transition duration-300 shadow-md flex items-center justify-center"
-              suppressHydrationWarning // Suppress hydration mismatch for fdprocessedid
+              suppressHydrationWarning
             >
               <Search size={20} className="mr-2" />
               Search
@@ -72,7 +72,7 @@ export default function HeroBanner() {
                 <button
                   key={index}
                   className={`bg-indigo-700 hover:bg-indigo-800 text-white px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 transform hover:scale-105 shadow-md`}
-                  suppressHydrationWarning // Suppress hydration mismatch for fdprocessedid
+                  suppressHydrationWarning
                 >
                   {category.name}
                 </button>
