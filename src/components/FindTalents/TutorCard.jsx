@@ -20,8 +20,8 @@ const TutorCard = ({ name, experience, subjects, rate, rating, image }) => {
         alt={`${name}'s profile`}
         className="w-16 h-16 rounded-full mr-4 object-cover"
         onError={(e) =>
-        (e.target.src =
-          "https://www.addinsedu.com/assets/default/images/default/thumb/default-member-logo.svg")
+          (e.target.src =
+            "https://www.addinsedu.com/assets/default/images/default/thumb/default-member-logo.svg")
         }
         suppressHydrationWarning
       />
@@ -74,8 +74,9 @@ const TutorCard = ({ name, experience, subjects, rate, rating, image }) => {
         suppressHydrationWarning
       >
         <svg
-          className={`w-6 h-6 ${isFavorited ? "text-red-500" : "text-gray-400"
-            }`}
+          className={`w-6 h-6 ${
+            isFavorited ? "text-red-500" : "text-gray-400"
+          }`}
           fill={isFavorited ? "currentColor" : "none"}
           stroke="currentColor"
           viewBox="0 0 24 24"

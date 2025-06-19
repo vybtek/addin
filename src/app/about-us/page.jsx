@@ -12,19 +12,19 @@ export default function AboutUs() {
 
       {/* Main Content */}
       <div className="max-w-6xl mx-auto px-4 py-6">
-        {/* Introduction Paragraph */}
+        {/* Introduction */}
         <div className="mb-12">
           <p className="text-gray-700 text-lg leading-relaxed">
             <span className="font-semibold text-green-600">
               Add-Ins Education
-            </span>{" "}
+            </span>
             was founded with the mindset and idea of breaking the stereotype
             made in the education field that divided intelligent students from
             average students. No matter what, knowledge comes from adequate
-            guidance and consistent practice! We at{" "}
+            guidance and consistent practice! We at
             <span className="font-semibold text-green-600">
               Add-Ins Education
-            </span>{" "}
+            </span>
             believe in instilling the greatest benefits of tutoring and
             mentoring in each of our students in order to instill confidence in
             their work and provide them with the insight to get to the root
@@ -49,7 +49,7 @@ export default function AboutUs() {
               excellent education and boast of tutors who are totally devoted
               and committed so as to build trust and compassion between teachers
               and students and ensure that the students achieve what they came
-              for. We at{" "}
+              for. We at
               <span className="font-semibold text-green-600">Add-Ins</span> Home
               Tuition/Tutor leave no stone unturned to make sure the tutor is of
               high standards. The tutors are put through a rigorous screening

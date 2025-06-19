@@ -80,10 +80,11 @@ export default function MembershipPlans() {
                 className="sr-only"
               />
               <span
-                className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${billingCycle === "monthly"
+                className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${
+                  billingCycle === "monthly"
                     ? "bg-sky-400 text-white shadow-md"
                     : "text-gray-600 hover:text-gray-900"
-                  }`}
+                }`}
               >
                 Billed Monthly
               </span>
@@ -98,10 +99,11 @@ export default function MembershipPlans() {
                 className="sr-only"
               />
               <span
-                className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${billingCycle === "yearly"
+                className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${
+                  billingCycle === "yearly"
                     ? "bg-sky-400 text-white shadow-md"
                     : "text-gray-600 hover:text-gray-900"
-                  }`}
+                }`}
               >
                 Billed Yearly
               </span>
@@ -119,46 +121,53 @@ export default function MembershipPlans() {
           {plans.map((plan, index) => (
             <div
               key={index}
-              className={`relative bg-white rounded-2xl shadow-lg overflow-hidden transition-transform hover:scale-105 ${plan.isPopular
+              className={`relative bg-white rounded-2xl shadow-lg overflow-hidden transition-transform hover:scale-105 ${
+                plan.isPopular
                   ? "bg-gradient-to-br from-sky-400 to-sky-500 text-white transform scale-105"
                   : ""
-                }`}
+              }`}
             >
               {/* Plan Header */}
               <div
-                className={`p-8 text-center ${plan.isPopular ? "" : "border-b border-gray-100"
-                  }`}
+                className={`p-8 text-center ${
+                  plan.isPopular ? "" : "border-b border-gray-100"
+                }`}
               >
                 <div className="flex justify-center mb-4">
                   <div
-                    className={`p-3 rounded-full ${plan.isPopular ? "bg-white bg-opacity-20" : "bg-green-100"
-                      }`}
+                    className={`p-3 rounded-full ${
+                      plan.isPopular ? "bg-white bg-opacity-20" : "bg-green-100"
+                    }`}
                   >
                     <Award
-                      className={`w-8 h-8 ${plan.isPopular ? "text-green-700" : "text-green-600"
-                        }`}
+                      className={`w-8 h-8 ${
+                        plan.isPopular ? "text-green-700" : "text-green-600"
+                      }`}
                     />
                   </div>
                 </div>
 
                 <h3
-                  className={`text-xl font-semibold mb-4 ${plan.isPopular ? "text-white" : "text-gray-900"
-                    }`}
+                  className={`text-xl font-semibold mb-4 ${
+                    plan.isPopular ? "text-white" : "text-gray-900"
+                  }`}
                 >
                   {plan.name}
                 </h3>
 
                 <div className="mb-0">
                   <span
-                    className={`text-4xl font-bold ${plan.isPopular ? "text-white" : "text-gray-900"
-                      }`}
+                    className={`text-4xl font-bold ${
+                      plan.isPopular ? "text-white" : "text-gray-900"
+                    }`}
                   >
                     {plan.price}
                   </span>
                   {plan.period && (
                     <span
-                      className={`text-sm ${plan.isPopular ? "text-sky-100" : "text-gray-500"
-                        }`}
+                      className={`text-sm ${
+                        plan.isPopular ? "text-sky-100" : "text-gray-500"
+                      }`}
                     >
                       {plan.period}
                     </span>
@@ -169,8 +178,9 @@ export default function MembershipPlans() {
               {/* Features */}
               <div className="p-2">
                 <h4
-                  className={`font-semibold mb-4 text-center ${plan.isPopular ? "text-white" : "text-gray-700"
-                    }`}
+                  className={`font-semibold mb-4 text-center ${
+                    plan.isPopular ? "text-white" : "text-gray-700"
+                  }`}
                 >
                   Features
                 </h4>
@@ -179,12 +189,14 @@ export default function MembershipPlans() {
                   {plan.features.map((feature, featureIndex) => (
                     <li key={featureIndex} className="flex items-start">
                       <Check
-                        className={`w-5 h-5 mt-0.5 mr-3 flex-shrink-0 ${plan.isPopular ? "text-white" : "text-green-500"
-                          }`}
+                        className={`w-5 h-5 mt-0.5 mr-3 flex-shrink-0 ${
+                          plan.isPopular ? "text-white" : "text-green-500"
+                        }`}
                       />
                       <span
-                        className={`text-sm ${plan.isPopular ? "text-white" : "text-gray-600"
-                          }`}
+                        className={`text-sm ${
+                          plan.isPopular ? "text-white" : "text-gray-600"
+                        }`}
                       >
                         {feature}
                       </span>
@@ -195,12 +207,13 @@ export default function MembershipPlans() {
                 {/* CTA Button */}
                 <button
                   disabled={plan.isDisabled}
-                  className={`w-full py-3 px-6 rounded-xl font-medium transition-all ${plan.isPopular
+                  className={`w-full py-3 px-6 rounded-xl font-medium transition-all ${
+                    plan.isPopular
                       ? "bg-white text-sky-500 cursor-pointer hover:bg-gray-50 shadow-lg"
                       : plan.isDisabled
-                        ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                        : "bg-sky-400 text-white cursor-pointer hover:bg-sky-500 shadow-lg"
-                    }`}
+                      ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                      : "bg-sky-400 text-white cursor-pointer hover:bg-sky-500 shadow-lg"
+                  }`}
                 >
                   {plan.buttonText}
                 </button>

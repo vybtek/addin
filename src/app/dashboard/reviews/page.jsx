@@ -2,7 +2,7 @@
 import { Star } from "lucide-react";
 
 const Reviews = () => {
-  // Dummy reviews data
+  // Dummy data
   const reviews = [
     {
       id: 1,
