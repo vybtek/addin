@@ -1,17 +1,15 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Pencil } from "lucide-react";
 
 const TutorSettingsPage = () => {
   const [isEditingAccount, setIsEditingAccount] = useState(false);
   const [isEditingLocation, setIsEditingLocation] = useState(false);
-
   const [accountData, setAccountData] = useState({
-    name: "Arpit",
-    email: "arpit56005@gmail.com",
-    phone: "6367885453",
+    name: "",
+    email: "",
+    phone: "",
   });
-
   const [locationData, setLocationData] = useState({
     address: "",
     locality: "",
@@ -19,29 +17,142 @@ const TutorSettingsPage = () => {
     state: "",
     postalCode: "",
   });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [userId, setUserId] = useState(null);
 
-  const handleAccountUpdate = () => {
-    setIsEditingAccount(false);
-    // Handle update logic here
+  // Retrieve userId from localStorage on client-side mount
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedUserId = localStorage.getItem("user_id");
+      setUserId(storedUserId);
+    }
+  }, []);
+
+  // Fetch user data when userId is available
+  useEffect(() => {
+    if (!userId) return;
+
+    const fetchUserData = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(
+          `https://api.vybtek.com/api/users/${userId}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch user data");
+        }
+        const data = await response.json();
+        console.log("API Response:", data); // Debug: Log the API response
+        setAccountData({
+          name: data.name || "",
+          email: data.email || "",
+          phone: data.phone || "",
+        });
+        setLocationData({
+          address: data.teacher_profile?.street || "", // Map street to address
+          locality: data.teacher_profile?.locality || "", // Adjust if locality exists
+          city: data.teacher_profile?.city || "",
+          state: data.teacher_profile?.state || "", // Adjust if state exists
+          postalCode: data.teacher_profile?.postal_code || "", // Use postal_code
+        });
+      } catch (err) {
+        setError(err.message);
+        console.error("Fetch Error:", err); // Debug: Log any errors
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, [userId]);
+
+  // Handle account update
+  const handleAccountUpdate = async () => {
+    if (!userId) return;
+    try {
+      const response = await fetch(
+        `https://api.vybtek.com/api/users/${userId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(accountData),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to update account");
+      }
+      setIsEditingAccount(false);
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
-  const handleLocationUpdate = () => {
-    setIsEditingLocation(false);
-    // Handle update logic here
+  // Handle location update
+  const handleLocationUpdate = async () => {
+    if (!userId) return;
+    try {
+      const response = await fetch(
+        `https://api.vybtek.com/api/users/${userId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            teacher_profile: {
+              street: locationData.address,
+              locality: locationData.locality,
+              city: locationData.city,
+              state: locationData.state,
+              postal_code: locationData.postalCode,
+            },
+          }),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to update location");
+      }
+      setIsEditingLocation(false);
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   const handleAccountCancel = () => {
     setIsEditingAccount(false);
-    // Reset form data if needed
   };
 
   const handleLocationCancel = () => {
     setIsEditingLocation(false);
-    // Reset form data if needed
   };
 
+  if (loading) {
+    return <div className="text-center py-16">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center py-16 text-red-500">{error}</div>;
+  }
+
+  if (!userId) {
+    return (
+      <div className="text-center py-16 text-red-500">
+        No user ID found. Please log in.
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-gray-50  py-16 ">
+    <div className="min-h-screen bg-gray-50 py-16">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-8">
           Contact Info
@@ -65,21 +176,6 @@ const TutorSettingsPage = () => {
 
           <div className="p-6">
             <div className="flex flex-col md:flex-row md:items-start gap-6">
-              {/* Profile Picture */}
-              <div className="flex-shrink-0">
-                <div className="relative">
-                  <div className="w-20 h-20 bg-gray-400 rounded-full flex items-center justify-center">
-                    <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-                      <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
-                    </div>
-                  </div>
-                  <button className="absolute -bottom-1 -right-1 w-8 h-8 bg-white border-2 border-gray-200 rounded-full flex items-center justify-center hover:bg-gray-50 transition-colors">
-                    <Pencil className="w-4 h-4 text-gray-600" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Account Details */}
               <div className="flex-1 space-y-4">
                 {!isEditingAccount ? (
                   <>
@@ -88,13 +184,14 @@ const TutorSettingsPage = () => {
                         <label className="block text-sm font-medium text-gray-700 mb-1">
                           User ID
                         </label>
-                        <p className="text-gray-900">arpit-6421gdiy</p>
+                        <p className="text-gray-900">{userId}</p>
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">
                           Email
                         </label>
-                        <p className="text-gray-900">a*******05@gmail.com</p>
+                        <p className="text-gray-900">{accountData.email}</p>{" "}
+                        {/* Removed masking for debugging */}
                       </div>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -319,15 +416,70 @@ const TutorSettingsPage = () => {
               </div>
             ) : (
               <div className="text-center py-12">
-                <p className="text-gray-500 mb-4">
-                  No location information added yet
-                </p>
-                <button
-                  onClick={() => setIsEditingLocation(true)}
-                  className="text-blue-500 hover:text-blue-600 font-medium"
-                >
-                  Add Location Details
-                </button>
+                {locationData.address ||
+                locationData.locality ||
+                locationData.city ||
+                locationData.state ||
+                locationData.postalCode ? (
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Address
+                      </label>
+                      <p className="text-gray-900">
+                        {locationData.address || "N/A"}
+                      </p>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Locality
+                        </label>
+                        <p className="text-gray-900">
+                          {locationData.locality || "N/A"}
+                        </p>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          City
+                        </label>
+                        <p className="text-gray-900">
+                          {locationData.city || "N/A"}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          State
+                        </label>
+                        <p className="text-gray-900">
+                          {locationData.state || "N/A"}
+                        </p>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Postal Code
+                        </label>
+                        <p className="text-gray-900">
+                          {locationData.postalCode || "N/A"}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <p className="text-gray-500 mb-4">
+                      No location information added yet
+                    </p>
+                    <button
+                      onClick={() => setIsEditingLocation(true)}
+                      className="text-blue-500 hover:text-blue-600 font-medium"
+                    >
+                      Add Location Details
+                    </button>
+                  </>
+                )}
               </div>
             )}
           </div>

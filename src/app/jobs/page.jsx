@@ -1,91 +1,15 @@
 "use client";
 import React, { useState, useMemo } from "react";
 import { Filter } from "lucide-react";
+import { useRouter } from "next/navigation";
 import SearchBar from "../../components/Jobs/SearchBar";
 import Filters from "../../components/Jobs/Filters";
 import JobCard from "../../components/Jobs/JobCard";
 import SortDropdown from "../../components/Jobs/SortDropdown";
-
-const jobsData = [
-  {
-    id: 1,
-    title:
-      "Need a Tutor for Class-10 (CBSE) | Math & Science | Female | DPS | Area: Ashirwad Nagar, Shobhagpura, Udaipur",
-    budget: 4000,
-    subjects: ["Math", "Science"],
-    paymentVerified: true,
-    applications: 9,
-    location: "Udaipur, RAJASTHAN",
-    ongoing: true,
-    amount: "₹4000.00",
-    timeAgo: "2025-05-21T08:21:00Z",
-    description:
-      "Female Tutor for Class 10 Math & Science. Seeking a dedicated and qualified tutor for offline tutoring.",
-    category: "Tutoring",
-    specialty: ["Mathematics", "Science"],
-    paymentType: "Fixed",
-    experienceLevel: "Intermediate",
-  },
-  {
-    id: 2,
-    title:
-      "Need a Tutor for Class-2 (CBSE) All Subjects | Female | Asian Global | Area: New CG road Chand Kheda, Ahmedabad",
-    budget: 3500,
-    subjects: ["Math", "Hindi", "English", "EVS"],
-    paymentVerified: true,
-    applications: 0,
-    location: "Udaipur, RAJASTHAN",
-    ongoing: true,
-    amount: "₹3500.00",
-    timeAgo: "2025-05-21T18:21:00Z",
-    description:
-      "Female Tutor for Class 2 All Subjects. Seeking a dedicated tutor for offline tutoring.",
-    category: "Tutoring",
-    specialty: ["Mathematics", "English", "Hindi"],
-    paymentType: "Fixed",
-    experienceLevel: "Beginner",
-  },
-  {
-    id: 3,
-    title:
-      "Need a Tutor for Class-6 (CBSE) All Subjects | Female | MMPS | Area: Sector 4, Udaipur",
-    budget: 3000,
-    subjects: ["English", "Hindi", "Math", "EVS"],
-    paymentVerified: true,
-    applications: 0,
-    location: "Udaipur, RAJASTHAN",
-    ongoing: true,
-    amount: "₹3000.00",
-    timeAgo: "2025-05-21T16:21:00Z",
-    description:
-      "Female Tutor for Class 6 All Subjects. Seeking a dedicated tutor for offline tutoring.",
-    category: "Tutoring",
-    specialty: ["Mathematics", "English", "Hindi"],
-    paymentType: "Fixed",
-    experienceLevel: "Beginner",
-  },
-  {
-    id: 4,
-    title:
-      "Need a Tutor for Class-9 (CBSE) Science & Math | Male | MMPS | Area: Sector 4, Udaipur",
-    budget: 4500,
-    subjects: ["Math", "Science"],
-    paymentVerified: true,
-    applications: 1,
-    location: "Udaipur, RAJASTHAN",
-    ongoing: true,
-    amount: "₹4500.00",
-    timeAgo: "2025-05-21T16:21:00Z",
-    description:
-      "Male Tutor for Class 9 Science & Math. Seeking a dedicated tutor for offline tutoring.",
-    category: "Tutoring",
-    specialty: ["Mathematics", "Science"],
-    paymentType: "Fixed",
-    experienceLevel: "Intermediate",
-  },
-];
+import useFetchJobs from "../../hooks/useFetchJobs";
 
 const JobsPage = () => {
+  const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("Relevance");
   const [showFilters, setShowFilters] = useState(false);
@@ -97,18 +21,67 @@ const JobsPage = () => {
     minBudget: "",
     maxBudget: "",
   });
-  const [visibleJobs, setVisibleJobs] = useState(2); // Initially show 2 jobs
-  const jobsPerPage = 2; // Load 2 more jobs per click
+  const [visibleJobs, setVisibleJobs] = useState(2);
+  const [snackbar, setSnackbar] = useState({ visible: false, message: "" });
+  const jobsPerPage = 4;
+  const { jobs, loading, error } = useFetchJobs(
+    "https://api.vybtek.com/api/job-posts"
+  );
+
+  const addToFavorites = async (jobPostId) => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      setSnackbar({
+        visible: true,
+        message: "Please log in to add to favorites.",
+      });
+      setTimeout(() => router.push("/login"), 2000);
+      return false;
+    }
+
+    try {
+      const response = await fetch(
+        "https://api.vybtek.com/api/job-post-favorites",
+        {
+          method: "POST",
+          headers: {
+            Accept: "*/*",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            job_post_id: jobPostId,
+          }),
+        }
+      );
+
+      const data = await response.json();
+      if (data.success) {
+        setSnackbar({ visible: true, message: "Job added to favorites!" });
+        return true; // Return success to JobCard
+      } else {
+        throw new Error(data.message || "Failed to add job to favorites.");
+      }
+    } catch (error) {
+      console.error("Error adding job to favorites:", error);
+      setSnackbar({
+        visible: true,
+        message:
+          error.message || "Failed to add job to favorites. Please try again.",
+      });
+      return false; // Return failure to JobCard
+    }
+  };
 
   const filteredAndSortedJobs = useMemo(() => {
-    let filteredJobs = [...jobsData];
+    let filteredJobs = [...jobs];
 
-    // Apply filters
     if (searchTerm) {
       filteredJobs = filteredJobs.filter(
         (job) =>
           job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          job.description.toLowerCase().includes(searchTerm.toLowerCase())
+          (job.description &&
+            job.description.toLowerCase().includes(searchTerm.toLowerCase()))
       );
     }
 
@@ -119,8 +92,8 @@ const JobsPage = () => {
     }
 
     if (filters.specialty !== "Specialty") {
-      filteredJobs = filteredJobs.filter((job) =>
-        job.specialty.includes(filters.specialty)
+      filteredJobs = filteredJobs.filter(
+        (job) => job.specialty && job.specialty.includes(filters.specialty)
       );
     }
 
@@ -148,20 +121,25 @@ const JobsPage = () => {
       );
     }
 
-    // Apply sorting
+    const now = new Date("2025-08-05T12:00:00Z"); // 05:30 PM IST on August 5, 2025
     if (sortBy === "Newest") {
-      filteredJobs.sort((a, b) => new Date(b.timeAgo) - new Date(a.timeAgo));
-    } else if (sortBy === "Oldest") {
-      filteredJobs.sort((a, b) => new Date(a.timeAgo) - new Date(b.timeAgo));
-    } else {
-      // Relevance: prioritize by applications and budget
       filteredJobs.sort(
-        (a, b) => b.applications - a.applications || b.budget - a.budget
+        (a, b) => new Date(b.created_at) - new Date(a.created_at)
       );
+    } else if (sortBy === "Oldest") {
+      filteredJobs.sort(
+        (a, b) => new Date(a.created_at) - new Date(b.created_at)
+      );
+    } else {
+      filteredJobs.sort((a, b) => {
+        const appDiff = (b.applications || 0) - (a.applications || 0);
+        const budgetDiff = (b.budget || 0) - (a.budget || 0);
+        return appDiff !== 0 ? appDiff : budgetDiff;
+      });
     }
 
     return filteredJobs;
-  }, [searchTerm, sortBy, filters]);
+  }, [searchTerm, sortBy, filters, jobs]);
 
   const handleLoadMore = () => {
     setVisibleJobs((prev) => prev + jobsPerPage);
@@ -177,15 +155,19 @@ const JobsPage = () => {
           <h1 className="text-2xl font-bold text-gray-900 mb-4">
             Requirements
           </h1>
-          <p className="text-gray-600 mb-6">
-            {filteredAndSortedJobs.length} jobs found
-          </p>
+          {loading && <p className="text-gray-600 mb-6">Loading jobs...</p>}
+          {error && <p className="text-red-600 mb-6">{error}</p>}
+          {!loading && !error && (
+            <p className="text-gray-600 mb-6">
+              {filteredAndSortedJobs.length} jobs found
+            </p>
+          )}
 
           <div className="flex flex-col lg:flex-row gap-4 mb-6">
             <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className="bg-sky-400 text-white px-6 py-3 cursor-pointer rounded-lg hover:bg-sky-500 transition-colors flex items-center gap-2 lg:w-auto w-full justify-center"
+              className="bg-sky-400 text-white px-6 py-3 rounded-lg hover:bg-sky-500 transition-colors flex items-center gap-2 lg:w-auto w-full justify-center"
             >
               <Filter className="w-4 h-4" />
               Filter
@@ -197,9 +179,23 @@ const JobsPage = () => {
         </div>
 
         <div className="space-y-4">
-          {displayedJobs.length > 0 ? (
-            displayedJobs.map((job) => <JobCard key={job.id} job={job} />)
-          ) : (
+          {loading && (
+            <div className="text-center text-gray-600 py-8">
+              <p className="text-lg font-medium">Loading jobs...</p>
+            </div>
+          )}
+          {error && (
+            <div className="text-center text-red-600 py-8">
+              <p className="text-lg font-medium">{error}</p>
+            </div>
+          )}
+          {displayedJobs.length > 0 &&
+            !loading &&
+            !error &&
+            displayedJobs.map((job) => (
+              <JobCard key={job.id} job={job} addToFavorites={addToFavorites} />
+            ))}
+          {!loading && !error && displayedJobs.length === 0 && (
             <div className="text-center text-gray-600 py-8">
               <p className="text-lg font-medium">No jobs found</p>
               <p className="text-sm">
@@ -209,7 +205,7 @@ const JobsPage = () => {
           )}
         </div>
 
-        {filteredAndSortedJobs.length > 0 && (
+        {filteredAndSortedJobs.length > 0 && !loading && !error && (
           <div className="text-center mt-8">
             {hasMoreJobs ? (
               <button
@@ -221,6 +217,29 @@ const JobsPage = () => {
             ) : (
               <p className="text-gray-600 text-sm">No more jobs to load</p>
             )}
+          </div>
+        )}
+
+        {snackbar.visible && (
+          <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-6 py-3 rounded-lg shadow-lg flex items-center max-w-md mx-4">
+            <span>{snackbar.message}</span>
+            <button
+              onClick={() => setSnackbar({ visible: false, message: "" })}
+              className="ml-4 text-white hover:text-blue-200"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
           </div>
         )}
       </div>

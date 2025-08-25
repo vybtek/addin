@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Head from "next/head";
 import {
   ChevronDown,
   ChevronUp,
@@ -10,7 +11,7 @@ import {
   Calendar,
 } from "lucide-react";
 
-export default function FlipkartFAQ() {
+export default function FAQ() {
   const [activeCategory, setActiveCategory] = useState("General");
   const [openQuestions, setOpenQuestions] = useState({});
 
@@ -25,311 +26,266 @@ export default function FlipkartFAQ() {
     { id: "General", label: "General", icon: Users },
     { id: "Fees", label: "Fees & Charges", icon: DollarSign },
     { id: "Account", label: "Managing Your Account", icon: Shield },
-    { id: "Services", label: "Services", icon: Headphones },
-    { id: "Support", label: "Fulfillment", icon: Calendar },
-    { id: "Shopping", label: "Addins", icon: Users },
+    { id: "Services", label: "Tutoring Services", icon: Headphones },
+    { id: "Support", label: "Support", icon: Calendar },
+    { id: "Shopping", label: "Student Resources", icon: Users },
   ];
 
   const faqData = {
     General: [
       {
         id: "g1",
-        question: "Why should I sell on Flipkart?",
+        question: "What is Addins Education?",
         answer:
-          "Selling on Flipkart gives you access to millions of customers across India, advanced logistics support, marketing tools, and a trusted platform that ensures secure transactions.",
+          "Addins Education is a tutoring platform offering personalized offline and online learning services to students across India, connecting them with qualified tutors.",
       },
       {
         id: "g2",
-        question: "How does selling on Flipkart.com work?",
+        question: "How do I start learning with Addins Education?",
         answer:
-          "You can register as a seller, list your products, manage inventory, fulfill orders through our logistics network, and receive payments directly to your account.",
+          "You can register on our website, select a tutor based on your needs, and schedule sessions through our platform or contact us directly.",
       },
       {
         id: "g3",
-        question:
-          "What is the minimum listing quantity to sell on Flipkart.com?",
+        question: "Who can use Addins Education services?",
         answer:
-          "There is no minimum listing quantity requirement. You can start selling with even a single product in most categories.",
+          "Our services are available to students of all ages, parents seeking tutors, and enterprises looking for educational solutions.",
       },
       {
         id: "g4",
-        question: "What products can I sell on Flipkart.com?",
+        question: "What subjects are offered?",
         answer:
-          "You can sell a wide range of products including electronics, fashion, home & kitchen, books, sports, automotive parts, and many more categories.",
-      },
-      {
-        id: "g5",
-        question: "What do I need to register to sell on Flipkart.com?",
-        answer:
-          "You need valid business documents like GST certificate, PAN card, bank account details, and address proof to register as a seller.",
-      },
-      {
-        id: "g6",
-        question: "I don't have a website- can I still sell on Flipkart.com?",
-        answer:
-          "Yes, you don't need your own website to sell on Flipkart. Our platform provides all the tools you need to showcase and sell your products.",
-      },
-      {
-        id: "g7",
-        question: "What is FAssured?",
-        answer:
-          "FAssured is a quality certification program that highlights products meeting Flipkart's quality standards for faster delivery, easy returns, and reliable service.",
-      },
-      {
-        id: "g8",
-        question: "Can I offer both products and services on Flipkart.com?",
-        answer:
-          "Currently, Flipkart primarily focuses on physical products. However, certain service categories may be available in specific programs.",
+          "We offer tutoring in a wide range of subjects including math, science, languages, and more, tailored to individual learning needs.",
       },
     ],
     Fees: [
       {
         id: "f1",
-        question: "Who decides the price of my products?",
+        question: "How are tutoring fees determined?",
         answer:
-          "As a seller, you have complete control over pricing your products. You can set competitive prices based on market research and your business strategy.",
+          "Fees are set based on the tutor's experience, session duration, and subject complexity, with transparent pricing provided during registration.",
       },
       {
         id: "f2",
-        question: "What are the charges for selling on Flipkart.com?",
+        question: "Are there any additional charges?",
         answer:
-          "Flipkart charges a commission fee that varies by category, typically ranging from 2-20%. Additional charges may apply for fulfillment services.",
+          "No additional charges apply beyond the agreed tutoring fees, though platform service fees may be included as per our terms.",
       },
       {
         id: "f3",
-        question: "Will I get charged for listing products on Flipkart.com?",
+        question: "What payment methods are accepted?",
         answer:
-          "No, listing products on Flipkart is completely free. You only pay commission when you make a sale.",
-      },
-      {
-        id: "f4",
-        question: "How and when do I get paid?",
-        answer:
-          "Payments are processed within 7-15 days after successful delivery and completion of the return window. Funds are directly transferred to your registered bank account.",
+          "We accept payments via bank transfer, UPI, and online wallets, processed securely through our platform.",
       },
     ],
     Account: [
       {
         id: "a1",
-        question: "How do I list my products on Flipkart.com?",
+        question: "How do I create an account?",
         answer:
-          "You can list products through the Seller Hub dashboard by providing product details, images, pricing, and inventory information.",
+          "Visit www.addinsedu.com, click 'Register,' and provide your name, email, and other required details to set up your account.",
       },
       {
         id: "a2",
-        question: "How do I manage my orders on Flipkart.com?",
+        question: "How can I update my profile?",
         answer:
-          "Use the Seller Hub to track orders, manage inventory, process shipments, handle returns, and communicate with customers.",
+          "Log in to your account, navigate to the 'Profile' section, and update your information as needed.",
       },
       {
         id: "a3",
-        question: "What do I need to list my products on Flipkart.com?",
+        question: "What if I forget my password?",
         answer:
-          "You need high-quality product images, detailed descriptions, accurate pricing, inventory count, and proper product categorization.",
-      },
-      {
-        id: "a4",
-        question:
-          "Can I get help with catalogue development (product images, descriptions, etc.)?",
-        answer:
-          "Yes, Flipkart offers catalogue support services and guidelines to help you create compelling product listings that drive sales.",
+          "Use the 'Forgot Password' link on the login page to reset your password via email.",
       },
     ],
     Services: [
       {
-        id: "a1",
-        question: "How do I list my products on Flipkart.com?",
+        id: "s1",
+        question: "What tutoring services are available?",
         answer:
-          "You can list products through the Seller Hub dashboard by providing product details, images, pricing, and inventory information.",
+          "We offer one-on-one tutoring, group classes, and customized learning plans, both online and at your location.",
       },
       {
-        id: "a2",
-        question: "How do I manage my orders on Flipkart.com?",
+        id: "s2",
+        question: "How are tutors selected?",
         answer:
-          "Use the Seller Hub to track orders, manage inventory, process shipments, handle returns, and communicate with customers.",
+          "Tutors undergo a rigorous screening process including interviews and assessments to ensure quality education.",
       },
       {
-        id: "a3",
-        question: "What do I need to list my products on Flipkart.com?",
+        id: "s3",
+        question: "Can I schedule a trial session?",
         answer:
-          "You need high-quality product images, detailed descriptions, accurate pricing, inventory count, and proper product categorization.",
-      },
-      {
-        id: "a4",
-        question:
-          "Can I get help with catalogue development (product images, descriptions, etc.)?",
-        answer:
-          "Yes, Flipkart offers catalogue support services and guidelines to help you create compelling product listings that drive sales.",
+          "Yes, trial sessions can be requested during registration to assess compatibility with a tutor.",
       },
     ],
     Support: [
       {
-        id: "a1",
-        question: "How do I list my products on Flipkart.com?",
+        id: "sp1",
+        question: "How can I contact support?",
         answer:
-          "You can list products through the Seller Hub dashboard by providing product details, images, pricing, and inventory information.",
+          "Reach us at support@addinsedu.com or call +91 9664384937 for assistance with any issues.",
       },
       {
-        id: "a2",
-        question: "How do I manage my orders on Flipkart.com?",
+        id: "sp2",
+        question: "What is the response time for support?",
         answer:
-          "Use the Seller Hub to track orders, manage inventory, process shipments, handle returns, and communicate with customers.",
+          "We aim to respond within 24 hours, though urgent queries may be addressed sooner.",
       },
       {
-        id: "a3",
-        question: "What do I need to list my products on Flipkart.com?",
+        id: "sp3",
+        question: "How do I report a problem with a tutor?",
         answer:
-          "You need high-quality product images, detailed descriptions, accurate pricing, inventory count, and proper product categorization.",
-      },
-      {
-        id: "a4",
-        question:
-          "Can I get help with catalogue development (product images, descriptions, etc.)?",
-        answer:
-          "Yes, Flipkart offers catalogue support services and guidelines to help you create compelling product listings that drive sales.",
+          "Contact our support team with details of the issue, and we will investigate and resolve it promptly.",
       },
     ],
     Shopping: [
       {
-        id: "a1",
-        question: "How do I list my products on Flipkart.com?",
+        id: "sr1",
+        question: "Where can I find learning resources?",
         answer:
-          "You can list products through the Seller Hub dashboard by providing product details, images, pricing, and inventory information.",
+          "Access study materials, practice tests, and guides in the 'Student Resources' section of our website.",
       },
       {
-        id: "a2",
-        question: "How do I manage my orders on Flipkart.com?",
+        id: "sr2",
+        question: "Are resources available for free?",
         answer:
-          "Use the Seller Hub to track orders, manage inventory, process shipments, handle returns, and communicate with customers.",
+          "Some resources are free, while premium content requires a subscription or purchase.",
       },
       {
-        id: "a3",
-        question: "What do I need to list my products on Flipkart.com?",
+        id: "sr3",
+        question: "How do I download resources?",
         answer:
-          "You need high-quality product images, detailed descriptions, accurate pricing, inventory count, and proper product categorization.",
-      },
-      {
-        id: "a4",
-        question:
-          "Can I get help with catalogue development (product images, descriptions, etc.)?",
-        answer:
-          "Yes, Flipkart offers catalogue support services and guidelines to help you create compelling product listings that drive sales.",
+          "Log in, navigate to the resource section, and download files directly after authentication.",
       },
     ],
   };
 
   const stats = [
-    { icon: Users, number: "45 crore+", text: "Flipkart customers" },
-    { icon: Shield, number: "7*", text: "days secure & regular payments" },
-    { icon: DollarSign, number: "Low cost", text: "of doing business" },
-    { icon: Headphones, number: "One click", text: "Seller Support" },
-    {
-      icon: Calendar,
-      number: "Access to",
-      text: "The Big Billion Days & more",
-    },
+    { icon: Users, number: "10,000+", text: "Students Served" },
+    { icon: Shield, number: "100%", text: "Secure Transactions" },
+    { icon: DollarSign, number: "Flexible", text: "Payment Plans" },
+    { icon: Headphones, number: "24/7", text: "Support Availability" },
+    { icon: Calendar, number: "Year-Round", text: "Tutoring Sessions" },
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 py-16">
-      {/* Header */}
-      <div className="bg-white border-b">
-        <div className="max-w-7xl mx-auto px-4 py-4">
-          <div className="flex flex-col lg:flex-row justify-center items-start lg:items-center">
-            <div className="mb-6 lg:mb-0">
-              <h1 className="text-2xl font-medium justify-start text-gray-800 mb-4">
-                Frequently Asked Questions
-              </h1>
-
-              {/* Stats */}
-              {/* <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+    <>
+      <Head>
+        <title>FAQ - Addins Education | Tutoring Support</title>
+        <meta
+          name="description"
+          content="Find answers to common questions about Addins Education's tutoring services, fees, account management, and support on www.addinsedu.com."
+        />
+        <meta
+          name="keywords"
+          content="Addins Education FAQ, tutoring support, Udaipur tutoring, online learning, student resources"
+        />
+        <meta name="robots" content="index, follow" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="canonical" href="https://www.addinsedu.com/faq" />
+      </Head>
+      <div className="min-h-screen bg-gray-50 py-16">
+        {/* Header */}
+        <div className="bg-white border-b">
+          <div className="max-w-7xl mx-auto px-4 py-6">
+            <div className="flex flex-col lg:flex-row justify-between items-center">
+              <div>
+                <h1 className="text-2xl font-medium text-gray-800 mb-4">
+                  Frequently Asked Questions
+                </h1>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
                 {stats.map((stat, index) => {
                   const IconComponent = stat.icon;
                   return (
                     <div key={index} className="text-center">
                       <div className="flex justify-center mb-2">
-                        <IconComponent className="w-8 h-8 text-blue-600" />
+                        <IconComponent className="w-8 h-8 text-green-600" />
                       </div>
-                      <div className="text-sm font-medium text-blue-600">{stat.number}</div>
+                      <div className="text-sm font-medium text-green-600">
+                        {stat.number}
+                      </div>
                       <div className="text-xs text-gray-600">{stat.text}</div>
                     </div>
                   );
                 })}
-              </div> */}
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="max-w-7xl mx-auto px-4 py-6">
-        <div className="flex flex-col lg:flex-row gap-6">
-          {/* Sidebar */}
-          <div className="lg:w-80 bg-white rounded-lg shadow-sm h-fit">
-            <div className="p-4">
-              {categories.map((category) => {
-                const IconComponent = category.icon;
-                return (
-                  <button
-                    key={category.id}
-                    onClick={() => setActiveCategory(category.id)}
-                    className={`cursor-pointer w-full text-left px-4 py-3 rounded-lg mb-2 flex items-center transition-colors ${activeCategory === category.id
-                        ? "bg-blue-50 text-blue-600 border-l-4 border-blue-600"
-                        : "text-gray-700 hover:bg-gray-50"
-                      }`}
-                  >
-                    <IconComponent className="w-4 h-4 mr-3" />
-                    <span className="text-sm font-medium">
-                      {category.label}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Main Content */}
-          <div className="flex-1">
-            <div className="bg-white rounded-lg shadow-sm">
-              <div className="p-6 border-b">
-                <h2 className="text-lg font-medium text-gray-800 flex items-center">
-                  {activeCategory}
-                  <div className="w-8 h-0.5 bg-blue-600 ml-4"></div>
-                </h2>
-              </div>
-
-              <div className="divide-y divide-gray-100">
-                {faqData[activeCategory]?.map((faq) => (
-                  <div key={faq.id}>
+        <div className="max-w-7xl mx-auto px-4 py-6">
+          <div className="flex flex-col lg:flex-row gap-6">
+            {/* Sidebar */}
+            <div className="lg:w-80 bg-white rounded-lg shadow-sm h-fit">
+              <div className="p-4">
+                {categories.map((category) => {
+                  const IconComponent = category.icon;
+                  return (
                     <button
-                      onClick={() => toggleQuestion(faq.id)}
-                      className="w-full text-left px-6 py-4 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition-colors"
+                      key={category.id}
+                      onClick={() => setActiveCategory(category.id)}
+                      className={`cursor-pointer w-full text-left px-4 py-3 rounded-lg mb-2 flex items-center transition-colors ${
+                        activeCategory === category.id
+                          ? "bg-green-50 text-green-600 border-l-4 border-green-600"
+                          : "text-gray-700 hover:bg-gray-50"
+                      }`}
                     >
-                      <div className="flex justify-between items-center cursor-pointer">
-                        <span className="text-sm text-gray-800 pr-4 leading-5">
-                          {faq.question}
-                        </span>
-                        {openQuestions[faq.id] ? (
-                          <ChevronUp className="w-5 h-5 cursor-pointer text-gray-400 flex-shrink-0" />
-                        ) : (
-                          <ChevronDown className="w-5 cursor-pointer h-5 text-gray-400 flex-shrink-0" />
-                        )}
-                      </div>
+                      <IconComponent className="w-4 h-4 mr-3" />
+                      <span className="text-sm font-medium">
+                        {category.label}
+                      </span>
                     </button>
+                  );
+                })}
+              </div>
+            </div>
 
-                    {openQuestions[faq.id] && (
-                      <div className="px-6 pb-4">
-                        <div className="text-sm text-gray-600 leading-relaxed bg-gray-50 p-4 rounded-lg">
-                          {faq.answer}
+            {/* Main Content */}
+            <div className="flex-1">
+              <div className="bg-white rounded-lg shadow-sm">
+                <div className="p-6 border-b">
+                  <h2 className="text-lg font-medium text-gray-800 flex items-center">
+                    {activeCategory}
+                    <div className="w-8 h-0.5 bg-green-600 ml-4"></div>
+                  </h2>
+                </div>
+
+                <div className="divide-y divide-gray-100">
+                  {faqData[activeCategory]?.map((faq) => (
+                    <div key={faq.id}>
+                      <button
+                        onClick={() => toggleQuestion(faq.id)}
+                        className="w-full text-left px-6 py-4 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition-colors"
+                        aria-expanded={openQuestions[faq.id]}
+                      >
+                        <div className="flex justify-between items-center cursor-pointer">
+                          <span className="text-sm text-gray-800 pr-4 leading-5">
+                            {faq.question}
+                          </span>
+                          {openQuestions[faq.id] ? (
+                            <ChevronUp className="w-5 h-5 cursor-pointer text-gray-400 flex-shrink-0" />
+                          ) : (
+                            <ChevronDown className="w-5 cursor-pointer h-5 text-gray-400 flex-shrink-0" />
+                          )}
                         </div>
-                      </div>
-                    )}
-                  </div>
-                ))}
+                      </button>
+
+                      {openQuestions[faq.id] && (
+                        <div className="px-6 pb-4">
+                          <div className="text-sm text-gray-600 leading-relaxed bg-gray-50 p-4 rounded-lg">
+                            {faq.answer}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

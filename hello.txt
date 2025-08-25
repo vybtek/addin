@@ -27,23 +27,247 @@ import {
   FaSpinner,
 } from "react-icons/fa";
 
-import {
-  fetchTeacherIdByUserId,
-  fetchTeacherProfile,
-  updateTeacherProfile,
-  addTeachingExperience,
-  updateTeachingExperience,
-  deleteTeachingExperience,
-  addEducation,
-  updateEducation,
-  deleteEducation,
-  addAward,
-  updateAward,
-  deleteAward,
-  fetchAvailableSubjects,
-  addTeacherSubject,
-  deleteTeacherSubject,
-} from "../../services/profileservice";
+// API Base URL - Update this to match your backend
+const API_BASE_URL = "https://api.vybtek.com/api";
+
+// Utility function to get auth token
+const getToken = (setToast) => {
+  const token = localStorage.getItem("authToken");
+  if (!token) {
+    setToast({
+      type: "error",
+      message: "Authentication token not found. Please login.",
+    });
+    return null;
+  }
+  return token;
+};
+
+// --- API SERVICE FUNCTIONS ---
+
+// Get teacher ID from user ID
+const fetchTeacherIdByUserId = async (userId, setToast) => {
+  const token = getToken(setToast);
+  if (!token) return null;
+  const res = await fetch(`${API_BASE_URL}/teachers/user/${userId}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok)
+    throw new Error(`Failed to fetch teacher by user ID: ${res.status}`);
+  const data = await res.json();
+  return data.teacher_id;
+};
+
+// Fetch full teacher profile
+const fetchTeacherProfile = async (teacherId, setToast) => {
+  const token = getToken(setToast);
+  if (!token) throw new Error("Authentication token not found");
+  const res = await fetch(
+    `${API_BASE_URL}/teachers/getfullprofile/${teacherId}`,
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+  if (!res.ok)
+    throw new Error(`Failed to fetch teacher profile: ${res.status}`);
+  const response = await res.json();
+  if (!response.success) throw new Error("Failed to fetch profile data");
+  return response.data;
+};
+
+// Update teacher profile
+const updateTeacherProfile = async (teacherId, data, setToast) => {
+  const token = getToken(setToast);
+  if (!token) throw new Error("Authentication token not found");
+  const res = await fetch(`${API_BASE_URL}/teachers/${teacherId}`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok)
+    throw new Error(`Failed to update teacher profile: ${res.status}`);
+  return await res.json();
+};
+
+// Teaching experience operations
+const addTeachingExperience = async (teacherId, data, setToast) => {
+  const token = getToken(setToast);
+  if (!token) throw new Error("Authentication token not found");
+  const payload = { ...data, teacher_id: teacherId };
+  const res = await fetch(`${API_BASE_URL}/teacher-experiences/`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok)
+    throw new Error(`Failed to add teaching experience: ${res.status}`);
+  return await res.json();
+};
+
+const updateTeachingExperience = async (experienceId, data, setToast) => {
+  const token = getToken(setToast);
+  if (!token) throw new Error("Authentication token not found");
+  const res = await fetch(
+    `${API_BASE_URL}/teacher-experiences/${experienceId}`,
+    {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }
+  );
+  if (!res.ok)
+    throw new Error(`Failed to update teaching experience: ${res.status}`);
+  return await res.json();
+};
+
+const deleteTeachingExperience = async (experienceId, setToast) => {
+  const token = getToken(setToast);
+  if (!token) throw new Error("Authentication token not found");
+  const res = await fetch(
+    `${API_BASE_URL}/teacher-experiences/${experienceId}`,
+    {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+  if (!res.ok)
+    throw new Error(`Failed to delete teaching experience: ${res.status}`);
+  return true;
+};
+
+// Education operations
+const addEducation = async (teacherId, data, setToast) => {
+  const token = getToken(setToast);
+  if (!token) throw new Error("Authentication token not found");
+  const payload = { ...data, teacher_id: teacherId };
+  const res = await fetch(`${API_BASE_URL}/teacher-educations/`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) throw new Error(`Failed to add education: ${res.status}`);
+  return await res.json();
+};
+
+const updateEducation = async (educationId, data, setToast) => {
+  const token = getToken(setToast);
+  if (!token) throw new Error("Authentication token not found");
+  const res = await fetch(`${API_BASE_URL}/teacher-educations/${educationId}`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error(`Failed to update education: ${res.status}`);
+  return await res.json();
+};
+
+const deleteEducation = async (educationId, setToast) => {
+  const token = getToken(setToast);
+  if (!token) throw new Error("Authentication token not found");
+  const res = await fetch(`${API_BASE_URL}/teacher-educations/${educationId}`, {
+    method: "DELETE",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) throw new Error(`Failed to delete education: ${res.status}`);
+  return true;
+};
+
+// Awards operations
+const addAward = async (teacherId, data, setToast) => {
+  const token = getToken(setToast);
+  if (!token) throw new Error("Authentication token not found");
+  const payload = { ...data, teacher_id: teacherId };
+  const res = await fetch(`${API_BASE_URL}/teacher-awards/`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) throw new Error(`Failed to add award: ${res.status}`);
+  return await res.json();
+};
+
+const updateAward = async (awardId, data, setToast) => {
+  const token = getToken(setToast);
+  if (!token) throw new Error("Authentication token not found");
+  const res = await fetch(`${API_BASE_URL}/teacher-awards/${awardId}`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error(`Failed to update award: ${res.status}`);
+  return await res.json();
+};
+
+const deleteAward = async (awardId, setToast) => {
+  const token = getToken(setToast);
+  if (!token) throw new Error("Authentication token not found");
+  const res = await fetch(`${API_BASE_URL}/teacher-awards/${awardId}`, {
+    method: "DELETE",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) throw new Error(`Failed to delete award: ${res.status}`);
+  return true;
+};
+
+// Subjects operations
+const fetchAvailableSubjects = async (setToast) => {
+  const token = getToken(setToast);
+  if (!token) throw new Error("Authentication token not found");
+  const res = await fetch(`${API_BASE_URL}/subjects/`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok)
+    throw new Error(`Failed to fetch available subjects: ${res.status}`);
+  const data = await res.json();
+  return Array.isArray(data) ? data : [];
+};
+
+const addTeacherSubject = async (teacherId, subjectId, setToast) => {
+  const token = getToken(setToast);
+  if (!token) throw new Error("Authentication token not found");
+  const res = await fetch(`${API_BASE_URL}/teacher-subjects/`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ teacher_id: teacherId, subject_id: subjectId }),
+  });
+  if (!res.ok) throw new Error(`Failed to assign subject: ${res.status}`);
+  return await res.json();
+};
+
+const deleteTeacherSubject = async (assignmentId, setToast) => {
+  const token = getToken(setToast);
+  if (!token) throw new Error("Authentication token not found");
+  const res = await fetch(`${API_BASE_URL}/teacher-subjects/${assignmentId}`, {
+    method: "DELETE",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) throw new Error(`Failed to remove subject: ${res.status}`);
+  return true;
+};
 
 // --- VALIDATION UTILITIES ---
 
@@ -555,7 +779,7 @@ function SectionCard({
 }
 
 // Profile Header Component
-function ProfileHeader({ name }) {
+function ProfileHeader({ name, title, onEdit }) {
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-6">
       <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
@@ -573,15 +797,18 @@ function ProfileHeader({ name }) {
               <h1 className="text-3xl font-bold text-gray-800">
                 {name || "Teacher"}
               </h1>
+              <p className="text-gray-600 mt-1">
+                {title || "No professional title added"}
+              </p>
             </div>
-            {/* <button
+            <button
               onClick={() => onEdit("title")}
               className="flex items-center gap-2 px-4 py-2 text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors font-medium"
               aria-label="Edit title"
             >
               <FaEdit size={16} />
               Edit Title
-            </button> */}
+            </button>
           </div>
           <div className="flex items-center mt-4">
             <div className="flex">
@@ -1958,6 +2185,8 @@ export default function ProfilePage() {
             {/* Profile Header */}
             <ProfileHeader
               name={profile.name}
+              title={profile.title}
+              onEdit={openModal}
             />
 
             {/* About Section */}
@@ -2156,6 +2385,8 @@ export default function ProfilePage() {
                       key={award.id}
                       id={award.id}
                       title={award.title}
+                      subtitle={award.subtitle}
+                      period={award.year ? `Received in ${award.year}` : ""}
                       description={award.description}
                       isLast={index === awards.length - 1}
                       onEdit={openModal.bind(null, "awards")}
@@ -2207,7 +2438,6 @@ export default function ProfilePage() {
               )}
             </SectionCard>
           </main>
-
 
           {/* Sidebar */}
           <Sidebar

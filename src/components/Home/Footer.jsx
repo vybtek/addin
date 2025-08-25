@@ -1,38 +1,19 @@
 "use client";
-import { useState } from "react";
-import {
-  Facebook,
-  Twitter,
-  Linkedin,
-  Instagram,
-  Youtube,
-  ChevronUp,
-} from "lucide-react";
+import { useState, useEffect } from "react";
+import { Facebook, Twitter, Linkedin, Instagram, Youtube } from "lucide-react";
 
 export default function Footer() {
   const [hoveredCategory, setHoveredCategory] = useState(null);
-
-  const categories = [
+  const [categories, setCategories] = useState([
     {
       title: "Job Category",
-      links: [
-        { name: "Academic Tutor", href: "#" },
-        { name: "Dance Trainer", href: "#" },
-        { name: "Music Trainer", href: "#" },
-        { name: "Yoga Trainer", href: "#" },
-        { name: "Drawing & Painting", href: "#" },
-        { name: "Writing & Languages", href: "#" },
-      ],
+      links: [],
     },
     {
       title: "Browse",
       links: [
         { name: "Find Jobs", href: "#" },
         { name: "Find Tutors", href: "#" },
-        { name: "Tutor in Udaipur", href: "#" },
-        { name: "Tutor in Ahmedabad", href: "#" },
-        { name: "Tutor in Jaipur", href: "#" },
-        { name: "Tutor in Mumbai", href: "#" },
       ],
     },
     {
@@ -53,15 +34,87 @@ export default function Footer() {
         { name: "Membership", href: "/dashboard/membership" },
       ],
     },
-  ];
+  ]);
 
   const socialMedia = [
-    { name: "Facebook", icon: <Facebook size={20} />, href: "#" },
-    { name: "Twitter", icon: <Twitter size={20} />, href: "#" },
-    { name: "LinkedIn", icon: <Linkedin size={20} />, href: "#" },
-    { name: "Instagram", icon: <Instagram size={20} />, href: "#" },
-    { name: "YouTube", icon: <Youtube size={20} />, href: "#" },
+    {
+      name: "Facebook",
+      icon: <Facebook size={20} />,
+      href: "https://www.facebook.com/addinseduc/",
+    },
+    {
+      name: "Twitter",
+      icon: <Twitter size={20} />,
+      href: "https://x.com/addinsedu/",
+    },
+    {
+      name: "LinkedIn",
+      icon: <Linkedin size={20} />,
+      href: "https://www.linkedin.com/company/addins/?originalSubdomain=in",
+    },
+    {
+      name: "Instagram",
+      icon: <Instagram size={20} />,
+      href: "https://www.instagram.com/addinseduc/",
+    },
+    {
+      name: "YouTube",
+      icon: <Youtube size={20} />,
+      href: "https://www.youtube.com/",
+    },
   ];
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const categoriesResponse = await fetch(
+          "https://api.vybtek.com/api/categories"
+        );
+        const categoriesData = await categoriesResponse.json();
+
+        const citiesResponse = await fetch("https://api.vybtek.com/api/cities");
+        const citiesData = await citiesResponse.json();
+
+        console.log("Categories API raw:", categoriesData);
+        console.log("Cities API raw:", citiesData);
+
+        // Corrected to use `data` instead of `categories` or `cities`
+        setCategories((prevCategories) =>
+          prevCategories.map((cat, i) => {
+            if (i === 0) {
+              return {
+                ...cat,
+                links: (categoriesData.data || []).map((category) => ({
+                  name: category.name,
+                  href: `#${category.name.toLowerCase().replace(/\s+/g, "-")}`,
+                })),
+              };
+            }
+            if (i === 1) {
+              return {
+                ...cat,
+                links: [
+                  { name: "Find Jobs", href: "#" },
+                  { name: "Find Tutors", href: "#" },
+                  ...(citiesData.data || []).map((city) => ({
+                    name: `Tutor in ${city.name}`,
+                    href: `#tutor-${city.name
+                      .toLowerCase()
+                      .replace(/\s+/g, "-")}`,
+                  })),
+                ],
+              };
+            }
+            return cat;
+          })
+        );
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <footer className="bg-black text-white w-full">

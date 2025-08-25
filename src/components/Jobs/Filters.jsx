@@ -1,16 +1,13 @@
-// Filters.jsx
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Search } from "lucide-react";
 
 const Filters = ({ filters, setFilters }) => {
-  const categories = ["All Categories", "Teaching", "Tutoring"];
-  const specialties = [
-    "Specialty",
-    "Mathematics",
-    "Science",
-    "English",
-    "Hindi",
-  ];
+  const [categories, setCategories] = useState(["All Categories"]); // Initialize with default
+  const [loadingCategories, setLoadingCategories] = useState(true);
+  const [errorCategories, setErrorCategories] = useState(null);
+  const [specialties, setSpecialties] = useState(["Specialty"]); // Initialize with default
+  const [loadingSpecialties, setLoadingSpecialties] = useState(true);
+  const [errorSpecialties, setErrorSpecialties] = useState(null);
   const paymentTypes = ["Payment Type", "Fixed", "Hourly"];
   const experienceLevels = [
     "Experience Level",
@@ -18,6 +15,75 @@ const Filters = ({ filters, setFilters }) => {
     "Intermediate",
     "Expert",
   ];
+
+  useEffect(() => {
+    // Fetch categories from API
+    const fetchCategories = async () => {
+      try {
+        setLoadingCategories(true);
+        const response = await fetch(
+          "https://api.vybtek.com/api/categories"
+        );
+        console.log("API Response Status (Categories):", response.status);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log("Raw API Response (Categories):", data);
+        if (data.success && Array.isArray(data.data)) {
+          setCategories([
+            "All Categories",
+            ...data.data.map((cat) => cat.name).sort(),
+          ]);
+        } else {
+          setCategories(["All Categories"]);
+          console.warn(
+            "API did not return a valid success object with data array for categories"
+          );
+        }
+      } catch (error) {
+        console.error("Error fetching categories:", error.message);
+        setErrorCategories("Failed to load categories. Using default.");
+        setCategories(["All Categories"]);
+      } finally {
+        setLoadingCategories(false);
+      }
+    };
+
+    // Fetch specialties from API
+    const fetchSpecialties = async () => {
+      try {
+        setLoadingSpecialties(true);
+        const response = await fetch("https://api.vybtek.com/api/subjects");
+        console.log("API Response Status (Specialties):", response.status);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log("Raw API Response (Specialties):", data);
+        if (data.success && Array.isArray(data.data)) {
+          setSpecialties([
+            "Specialty",
+            ...data.data.map((spec) => spec.name).sort(),
+          ]);
+        } else {
+          setSpecialties(["Specialty"]);
+          console.warn(
+            "API did not return a valid success object with data array for specialties"
+          );
+        }
+      } catch (error) {
+        console.error("Error fetching specialties:", error.message);
+        setErrorSpecialties("Failed to load specialties. Using default.");
+        setSpecialties(["Specialty"]);
+      } finally {
+        setLoadingSpecialties(false);
+      }
+    };
+
+    fetchCategories();
+    fetchSpecialties();
+  }, []);
 
   const handleFilterChange = (key, value) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
@@ -30,36 +96,48 @@ const Filters = ({ filters, setFilters }) => {
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Category
           </label>
-          <select
-            value={filters.category}
-            onChange={(e) => handleFilterChange("category", e.target.value)}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            aria-label="Select category"
-          >
-            {categories.map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
+          {loadingCategories ? (
+            <p className="text-gray-600 text-sm">Loading categories...</p>
+          ) : errorCategories ? (
+            <p className="text-red-600 text-sm">{errorCategories}</p>
+          ) : (
+            <select
+              value={filters.category}
+              onChange={(e) => handleFilterChange("category", e.target.value)}
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              aria-label="Select category"
+            >
+              {categories.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+          )}
         </div>
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Specialty
           </label>
-          <select
-            value={filters.specialty}
-            onChange={(e) => handleFilterChange("specialty", e.target.value)}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            aria-label="Select specialty"
-          >
-            {specialties.map((specialty) => (
-              <option key={specialty} value={specialty}>
-                {specialty}
-              </option>
-            ))}
-          </select>
+          {loadingSpecialties ? (
+            <p className="text-gray-600 text-sm">Loading specialties...</p>
+          ) : errorSpecialties ? (
+            <p className="text-red-600 text-sm">{errorSpecialties}</p>
+          ) : (
+            <select
+              value={filters.specialty}
+              onChange={(e) => handleFilterChange("specialty", e.target.value)}
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              aria-label="Select specialty"
+            >
+              {specialties.map((specialty) => (
+                <option key={specialty} value={specialty}>
+                  {specialty}
+                </option>
+              ))}
+            </select>
+          )}
         </div>
 
         <div>
