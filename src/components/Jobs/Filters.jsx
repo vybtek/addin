@@ -21,9 +21,7 @@ const Filters = ({ filters, setFilters }) => {
     const fetchCategories = async () => {
       try {
         setLoadingCategories(true);
-        const response = await fetch(
-          "https://api.vybtek.com/api/categories"
-        );
+        const response = await fetch("https://api.vybtek.com/api/categories");
         console.log("API Response Status (Categories):", response.status);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

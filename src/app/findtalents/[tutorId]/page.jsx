@@ -44,25 +44,25 @@ const TutorDetails = () => {
           );
           if (foundTutor && foundTutor.teacher_profile) {
             const transformedTutor = {
-              name: foundTutor.name || "Unknown",
+              name: foundTutor.name || "Unknown user",
               experience: foundTutor.teacher_profile?.experience
                 ?.map((exp) => `${exp.job_title} at ${exp.institute_name}`)
-                .join(", ") || "No experience",
+                .join(", ") || "No experience found",
               subjects: foundTutor.teacher_profile?.subjects || [],
               rateHourly: `₹${foundTutor.teacher_profile?.charges_hourly || 0}/hr`, // Hourly rate
               rateMonthly: `₹${foundTutor.teacher_profile?.charges_monthly || 0}/mo`, // Monthly rate
               rating: 0, // Add logic to calculate rating if available
               createdAt: "", // Add logic to determine join date
-              location: foundTutor.teacher_profile?.city || "Unknown",
+              location: foundTutor.teacher_profile?.city || "Unknown city",
               image: foundTutor.teacher_profile?.profile_photo_url || null,
-              description: foundTutor.teacher_profile?.about || "No description",
+              description: foundTutor.teacher_profile?.about || "No description found",
               availability:
                 foundTutor.teacher_profile?.mode === "both"
                   ? "Flexible"
                   : foundTutor.teacher_profile?.mode || "",
               education: foundTutor.teacher_profile?.education
                 ?.map((edu) => `${edu.degree} from ${edu.institution}`)
-                .join(", ") || "No education",
+                .join(", ") || "No education found",
               reviews: 0, // Add logic if reviews are available
               totalStudents: 0, // Add logic if total students are available
               memberSince: "", // Add logic to determine member since
@@ -282,11 +282,10 @@ const TutorDetails = () => {
                   {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
-                      className={`w-5 h-5 ${
-                        i < Math.floor(tutor.rating)
-                          ? "text-yellow-400 fill-current"
-                          : "text-gray-300"
-                      }`}
+                      className={`w-5 h-5 ${i < Math.floor(tutor.rating)
+                        ? "text-yellow-400 fill-current"
+                        : "text-gray-300"
+                        }`}
                     />
                   ))}
                 </div>

@@ -14,9 +14,12 @@ const JobCard = ({ job, addToFavorites }) => {
       const token = localStorage.getItem("authToken");
       if (token) {
         try {
-          const response = await fetch("https://api.vybtek.com/api/job-post-favorites", {
-            headers: { "Authorization": `Bearer ${token}` },
-          });
+          const response = await fetch(
+            "https://api.vybtek.com/api/job-post-favorites",
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          );
           const data = await response.json();
           if (data.success && Array.isArray(data.favorites)) {
             setIsFavorited(data.favorites.includes(job.id));
@@ -61,9 +64,12 @@ const JobCard = ({ job, addToFavorites }) => {
     const token = localStorage.getItem("authToken");
     if (token) {
       try {
-        const response = await fetch("https://api.vybtek.com/api/job-post-favorites", {
-          headers: { "Authorization": `Bearer ${token}` },
-        });
+        const response = await fetch(
+          "https://api.vybtek.com/api/job-post-favorites",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         const data = await response.json();
         if (data.success && Array.isArray(data.favorites)) {
           return data.favorites.includes(job.id);
@@ -79,13 +85,16 @@ const JobCard = ({ job, addToFavorites }) => {
     const token = localStorage.getItem("authToken");
     if (token) {
       try {
-        const response = await fetch(`https://api.vybtek.com/api/job-post-favorites/${jobPostId}`, {
-          method: "DELETE",
-          headers: {
-            "Accept": "*/*",
-            "Authorization": `Bearer ${token}`,
-          },
-        });
+        const response = await fetch(
+          `https://api.vybtek.com/api/job-post-favorites/${jobPostId}`,
+          {
+            method: "DELETE",
+            headers: {
+              Accept: "*/*",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         const data = await response.json();
         return data.success;
       } catch (error) {
@@ -191,9 +200,14 @@ const JobCard = ({ job, addToFavorites }) => {
             className={`p-2 cursor-pointer transition-colors duration-200 ${
               isFavorited ? "text-red-500" : "text-gray-400 hover:text-red-500"
             }`}
-            aria-label={isFavorited ? "Remove from favorites" : "Add to favorites"}
+            aria-label={
+              isFavorited ? "Remove from favorites" : "Add to favorites"
+            }
           >
-            <Heart className="w-5 h-5" fill={isFavorited ? "currentColor" : "none"} />
+            <Heart
+              className="w-5 h-5"
+              fill={isFavorited ? "currentColor" : "none"}
+            />
           </button>
         </div>
       </div>

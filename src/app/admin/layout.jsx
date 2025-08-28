@@ -5,7 +5,6 @@ import React from "react";
 const Layout = ({ children }) => {
   return (
     <div className="flex min-h-screen bg-gray-50 text-gray-800" role="main">
-      {/* Sidebar */}
       <aside
         className="w-64 shrink-0 bg-white shadow-lg"
         aria-label="Dashboard Sidebar"
@@ -21,6 +20,10 @@ const Layout = ({ children }) => {
           aria-label="Main Content"
         >
           {children}
+          {/* Footer */}
+          <footer className="text-center text-gray-500 text-sm">
+            Copyright © 2025 All rights reserved.
+          </footer>
         </main>
       </div>
     </div>
